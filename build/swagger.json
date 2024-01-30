@@ -6,7 +6,62 @@
 		"parameters": {},
 		"requestBodies": {},
 		"responses": {},
-		"schemas": {},
+		"schemas": {
+			"Pick_Post.Objection.DataPropertyNames_Post__": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"title": {
+						"type": "string"
+					},
+					"content": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"title",
+					"content"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Objection.ModelObject_Post_": {
+				"$ref": "#/components/schemas/Pick_Post.Objection.DataPropertyNames_Post__",
+				"description": "A Pojo version of model."
+			},
+			"PostSchema": {
+				"$ref": "#/components/schemas/Objection.ModelObject_Post_"
+			},
+			"Pick_PostSchema.Exclude_keyofPostSchema.id-or-createdAt-or-updatedAt__": {
+				"properties": {
+					"title": {
+						"type": "string"
+					},
+					"content": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"title",
+					"content"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_PostSchema.id-or-createdAt-or-updatedAt_": {
+				"$ref": "#/components/schemas/Pick_PostSchema.Exclude_keyofPostSchema.id-or-createdAt-or-updatedAt__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			}
+		},
 		"securitySchemes": {}
 	},
 	"info": {
@@ -21,14 +76,17 @@
 	"paths": {
 		"/posts": {
 			"get": {
-				"operationId": "GetPosts",
+				"operationId": "GetAllPosts",
 				"responses": {
 					"200": {
 						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "string"
+									"items": {
+										"$ref": "#/components/schemas/PostSchema"
+									},
+									"type": "array"
 								}
 							}
 						}
@@ -39,6 +97,36 @@
 				],
 				"security": [],
 				"parameters": []
+			},
+			"post": {
+				"operationId": "CreatePost",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PostSchema"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Posts"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Omit_PostSchema.id-or-createdAt-or-updatedAt_"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/healthCheck": {

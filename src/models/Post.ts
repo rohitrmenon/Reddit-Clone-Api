@@ -1,11 +1,12 @@
-import { Model } from "objection";
-
-export class Post extends Model {
+import { ModelObject } from "objection";
+import Base from "./Base";
+export class Post extends Base {
   id!: number;
   title!: string;
   content!: string;
-  createdAt?: string; 
-  updatedAt?: string; 
+  createdAt?: string;
+  updatedAt?: string;
+
   static get tableName() {
     return "posts";
   }
@@ -17,9 +18,9 @@ export class Post extends Model {
       properties: {
         id: { type: "integer" },
         title: { type: "string", minLength: 1, maxLength: 255 },
-        content: { type: "text" },
-        createdAt: { type: ["string", "null"], format: "date-time" }, 
-        updatedAt: { type: ["string", "null"], format: "date-time" },
+        content: { type: "string" },
+        createdAt: { type: "string", format: "date-time" },
+        updatedAt: { type: "string", format: "date-time" },
       },
     };
   }
@@ -33,3 +34,5 @@ export class Post extends Model {
     this.updatedAt = new Date().toISOString();
   }
 }
+
+export type PostSchema = ModelObject<Post>;

@@ -5,5 +5,5 @@ import logger from "./helpers/logger";
 const port = appConfig.port as number;
 
 app.listen(port, () =>
-  logger.info(`tsoa app listening at http://localhost:${port}`)
+  logger.info(`service listening at http://localhost:${port}`)
 );

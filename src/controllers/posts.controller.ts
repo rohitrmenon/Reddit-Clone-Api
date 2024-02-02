@@ -6,23 +6,30 @@ import {
   Body,
   SuccessResponse,
   Post,
+  Path,
 } from "tsoa";
 import { PostsService } from "../services/posts.service";
-import { PostSchema } from "../models/Post";
-@Route("posts")
+import { PostSchema } from "../models/model.post";
+@Route("api/v1/posts")
 @Tags("Posts")
 export class PostsController extends Controller {
   private __PostsService = new PostsService();
 
-  @Get()
-  public async getAllPosts(): Promise<PostSchema[] | undefined> {
+  @Get("{postId}")
+  public getPost(@Path() postId: number) {
     this.setStatus(200);
-    return this.__PostsService.getPosts();
+    return this.__PostsService.get(postId);
+  }
+
+  @Get()
+  public getAllPosts() {
+    this.setStatus(200);
+    return this.__PostsService.getAllPosts();
   }
 
   @Post()
   @SuccessResponse("201", "Created")
-  public async createPost(
+  public createPost(
     @Body() requestBody: Omit<PostSchema, "id" | "createdAt" | "updatedAt">
   ) {
     this.setStatus(200);

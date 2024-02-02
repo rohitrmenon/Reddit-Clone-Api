@@ -7,22 +7,98 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"Pick_User.Objection.DataPropertyNames_User__": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"email": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"status": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"email",
+					"name",
+					"status",
+					"password"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Objection.ModelObject_User_": {
+				"$ref": "#/components/schemas/Pick_User.Objection.DataPropertyNames_User__",
+				"description": "A Pojo version of model."
+			},
+			"UserSchema": {
+				"$ref": "#/components/schemas/Objection.ModelObject_User_"
+			},
+			"Pick_any.Objection.DataPropertyNames_any__": {
+				"properties": {},
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Objection.ModelObject_any_": {
+				"$ref": "#/components/schemas/Pick_any.Objection.DataPropertyNames_any__",
+				"description": "A Pojo version of model."
+			},
+			"User": {
+				"$ref": "#/components/schemas/Objection.ModelObject_any_"
+			},
+			"Pick_UserSchema.Exclude_keyofUserSchema.id-or-createdAt-or-updatedAt__": {
+				"properties": {
+					"email": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"status": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"email",
+					"name",
+					"status",
+					"password"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_UserSchema.id-or-createdAt-or-updatedAt_": {
+				"$ref": "#/components/schemas/Pick_UserSchema.Exclude_keyofUserSchema.id-or-createdAt-or-updatedAt__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
 			"Pick_Post.Objection.DataPropertyNames_Post__": {
 				"properties": {
 					"id": {
 						"type": "number",
 						"format": "double"
 					},
-					"title": {
-						"type": "string"
-					},
-					"content": {
-						"type": "string"
-					},
 					"createdAt": {
 						"type": "string"
 					},
 					"updatedAt": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"content": {
 						"type": "string"
 					}
 				},
@@ -74,7 +150,202 @@
 		"contact": {}
 	},
 	"paths": {
-		"/posts": {
+		"/api/v1/users/{userId}": {
+			"get": {
+				"operationId": "GetUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"type": "string"
+										},
+										{
+											"$ref": "#/components/schemas/UserSchema"
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/users": {
+			"get": {
+				"operationId": "GetAllUsers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"type": "string"
+										},
+										{
+											"items": {
+												"$ref": "#/components/schemas/UserSchema"
+											},
+											"type": "array"
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateUser",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/User"
+										},
+										{
+											"type": "string",
+											"enum": [
+												"Error creating User"
+											]
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Omit_UserSchema.id-or-createdAt-or-updatedAt_"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/users/login": {
+			"post": {
+				"operationId": "Login",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"id": {
+										"type": "number",
+										"format": "double"
+									}
+								},
+								"required": [
+									"name",
+									"id"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/posts/{postId}": {
+			"get": {
+				"operationId": "GetPost",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"type": "string"
+										},
+										{
+											"$ref": "#/components/schemas/PostSchema"
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Posts"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "postId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/posts": {
 			"get": {
 				"operationId": "GetAllPosts",
 				"responses": {
@@ -83,10 +354,17 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/PostSchema"
-									},
-									"type": "array"
+									"anyOf": [
+										{
+											"type": "string"
+										},
+										{
+											"items": {
+												"$ref": "#/components/schemas/PostSchema"
+											},
+											"type": "array"
+										}
+									]
 								}
 							}
 						}
@@ -106,7 +384,14 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/PostSchema"
+									"anyOf": [
+										{
+											"type": "string"
+										},
+										{
+											"$ref": "#/components/schemas/PostSchema"
+										}
+									]
 								}
 							}
 						}

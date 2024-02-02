@@ -1,5 +1,5 @@
 import { ModelObject } from "objection";
-import Base from "./Base";
+import Base from "./model.base";
 export class Post extends Base {
   id!: number;
   title!: string;

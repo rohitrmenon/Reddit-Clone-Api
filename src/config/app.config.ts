@@ -10,6 +10,7 @@ export const appConfig = {
     enabled: process.env.SWAGGER_ENABLED === "true", 
     path: "/docs",
   },
+  jwtSecret: process.env.JWT_SECRET,
   postgresDatabase: process.env.POSTGRES_DATABASE || "postgres",
   postgresPort: process.env.POSTGRES_PORT || 5432 ,
   postgresHost: process.env.POSTGRES_HOST || "localhost",

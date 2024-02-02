@@ -3,10 +3,10 @@ import { UserSchema } from "../models/model.user";
 import { appConfig } from "../config/app.config";
 export class JwtService {
   static generateToken(
-    user: Omit<UserSchema, "email" | "status" | "password">
+    user: Omit<UserSchema, "id" | "status" | "password">
   ): string {
     const token = jwt.sign(
-      { userId: user.id, userName: user.name },
+      { userName: user.name , email: user.email },
       appConfig.jwtSecret as Secret,
       {
         expiresIn: "1h",
@@ -16,15 +16,15 @@ export class JwtService {
   }
   static verifyToken(
     token: string
-  ): Omit<UserSchema, "email" | "status" | "password"> | null {
+  ): Omit<UserSchema, "id" | "status" | "password"> | null {
     try {
       const decoded = jwt.verify(token, appConfig.jwtSecret as Secret) as {
-        userId: number;
         userName: string;
+        email:string;
       };
-      const user: Omit<UserSchema, "email" | "status" | "password"> = {
-        id: decoded.userId,
+      const user: Omit<UserSchema, "id" | "status" | "password"> = {
         name: decoded.userName,
+        email: decoded.email,
       };
       return user;
     } catch (error) {

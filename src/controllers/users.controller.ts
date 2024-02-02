@@ -12,7 +12,6 @@ import {
 import { UsersService } from "../services/users.service";
 import { UserSchema } from "../models/model.user";
 import { authMiddleware } from "../middlewares/auth.middleware";
-import { JwtService } from "../services/jwt.service";
 @Route("api/v1/users")
 @Tags("Users")
 export class UserController extends Controller {
@@ -31,18 +30,21 @@ export class UserController extends Controller {
     return this.__UsersService.getAllUsers();
   }
 
-  @Post()
-  @SuccessResponse("201", "Created")
-  public createUser(
+  @Post("/register")
+  @SuccessResponse("201", "User registered successfully")
+  public async createUser(
     @Body() requestBody: Omit<UserSchema, "id" | "createdAt" | "updatedAt">
-  ) {
-    this.setStatus(200);
-    return this.__UsersService.create(requestBody);
+  ): Promise<UserSchema | string> {
+    const newUser = await this.__UsersService.create(requestBody);
+    return newUser;
   }
 
   @Post("/login")
-  public async login(@Body() requestBody: { id: number; name: string }) {
-    const user = JwtService.generateToken(requestBody);
+  @SuccessResponse("201", "User logged in successfully")
+  public async loginUser(
+    @Body() requestBody: Pick<UserSchema, "email" | "password">
+  ): Promise<UserSchema | string> {
+    const user = await this.__UsersService.login(requestBody);
     return user;
   }
 }

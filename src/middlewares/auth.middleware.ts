@@ -3,7 +3,7 @@ import { JwtService } from "../services/jwt.service";
 import { UserSchema } from "../models/model.user";
 
 export interface CustomRequest extends Request {
-  user: Omit<UserSchema, "email" | "status" | "password"> | null;
+  user: Omit<UserSchema, "id" | "status" | "password"> | null;
 }
 
 export const authMiddleware = async (
@@ -26,6 +26,6 @@ export const authMiddleware = async (
     (req as CustomRequest).user = user;
     next();
   } catch (err) {
-    res.status(401).send("Please authenticate");
+    res.status(401).send("Please authenticate!");
   }
 };

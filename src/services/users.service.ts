@@ -1,5 +1,6 @@
 import { UserSchema, User } from "../models/model.user";
 import logger from "../helpers/logger";
+import { JwtService } from "./jwt.service";
 export class UsersService {
   public async get(id: number): Promise<UserSchema | string> {
     try {
@@ -29,11 +30,37 @@ export class UsersService {
     requestBody: Omit<UserSchema, "id" | "createdAt" | "updatedAt">
   ) {
     try {
-      const newUser = await User.query().insert(requestBody);
-      return newUser;
+      const result = await User.query().insert(requestBody);
+      const token = JwtService.generateToken(result);
+      return {
+        token,
+        ...result,
+      };
     } catch (e) {
       logger.error(e);
       return "Error creating User";
+    }
+  }
+
+  public async login(
+    requestBody: Pick<UserSchema, "email" | "password">
+  ): Promise<UserSchema | string > {
+    const user = await User.query().findOne({
+      email: requestBody.email,
+    });
+    if (user) {
+      if (await user.comparePassword(requestBody.password)) {
+        const token = JwtService.generateToken(user);
+        return {
+          token,
+          ...user,
+        } as UserSchema;
+      } else {
+        return "Incorrect Password";
+      }
+    }
+    else{
+      return "User not found"
     }
   }
 }

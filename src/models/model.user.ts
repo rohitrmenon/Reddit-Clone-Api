@@ -5,8 +5,9 @@ export class User extends Model {
   id!: number;
   email!: string;
   name!: string;
-  status!: string;
+  username!: string;
   password!: string;
+  image!: string;
 
   static get tableName() {
     return "users";
@@ -15,13 +16,14 @@ export class User extends Model {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["email", "name", "status", "password"],
+      required: ["email", "name", "username", "password" ],
       properties: {
         id: { type: "integer" },
         email: { type: "string", format: "email" },
         name: { type: "string" },
-        status: { type: "string" },
+        username: { type: "string" },
         password: { type: "string" },
+        image: { type: "string" },
       },
     };
   }

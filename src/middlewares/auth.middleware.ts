@@ -3,7 +3,7 @@ import { JwtService } from "../services/jwt.service";
 import { UserSchema } from "../models/model.user";
 
 export interface CustomRequest extends Request {
-  user: Omit<UserSchema, "id" | "status" | "password"> | null;
+  user: Omit<UserSchema, "id" | "password" |"username" | "image"> | null;
 }
 
 export const authMiddleware = async (

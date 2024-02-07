@@ -3,7 +3,7 @@ import { UserSchema } from "../models/model.user";
 import { appConfig } from "../config/app.config";
 export class JwtService {
   static generateToken(
-    user: Omit<UserSchema, "id" | "status" | "password">
+    user: Omit<UserSchema, "id" | "password" |"username" | "image">
   ): string {
     const token = jwt.sign(
       { userName: user.name , email: user.email },
@@ -16,13 +16,13 @@ export class JwtService {
   }
   static verifyToken(
     token: string
-  ): Omit<UserSchema, "id" | "status" | "password"> | null {
+  ): Omit<UserSchema, "id" | "password" |"username" | "image"> | null {
     try {
       const decoded = jwt.verify(token, appConfig.jwtSecret as Secret) as {
         userName: string;
         email:string;
       };
-      const user: Omit<UserSchema, "id" | "status" | "password"> = {
+      const user: Omit<UserSchema, "id" | "password" |"username" | "image"> = {
         name: decoded.userName,
         email: decoded.email,
       };

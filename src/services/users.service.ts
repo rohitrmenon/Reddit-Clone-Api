@@ -51,6 +51,7 @@ export class UsersService {
     if (user) {
       if (await user.comparePassword(requestBody.password)) {
         const token = JwtService.generateToken(user);
+        console.log(token)
         return {
           token,
           ...user,

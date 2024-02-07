@@ -11,6 +11,7 @@ import swaggerUi from "swagger-ui-express";
 import { RegisterRoutes } from "../build/routes";
 import { appConfig } from "./config/app.config";
 import config from "../knexfile";
+import cors from "cors";
 
 const knexInstance = Knex(config);
 
@@ -23,7 +24,14 @@ app.use(
     extended: true,
   })
 );
-
+const corsOptions = {
+  origin: "*",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  Headers: true,
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+};
+app.use(cors(corsOptions));
 app.use(json());
 app.use(
   appConfig.swagger.path,

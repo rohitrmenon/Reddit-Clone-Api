@@ -16,7 +16,7 @@ import { authMiddleware } from "../middlewares/auth.middleware";
 @Tags("Users")
 export class UserController extends Controller {
   private __UsersService = new UsersService();
-
+  
   @Get("{userId}")
   public getUser(@Path() userId: number) {
     this.setStatus(200);
@@ -29,7 +29,7 @@ export class UserController extends Controller {
     this.setStatus(200);
     return this.__UsersService.getAllUsers();
   }
-
+  
   @Post("/register")
   @SuccessResponse("201", "User registered successfully")
   public async createUser(
@@ -44,6 +44,7 @@ export class UserController extends Controller {
   public async loginUser(
     @Body() requestBody: Pick<UserSchema, "email" | "password">
   ): Promise<UserSchema | string> {
+    console.log("requestBody", requestBody);
     const user = await this.__UsersService.login(requestBody);
     return user;
   }

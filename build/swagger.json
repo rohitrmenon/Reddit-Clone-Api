@@ -19,10 +19,13 @@
 					"name": {
 						"type": "string"
 					},
-					"status": {
+					"username": {
 						"type": "string"
 					},
 					"password": {
+						"type": "string"
+					},
+					"image": {
 						"type": "string"
 					}
 				},
@@ -30,8 +33,9 @@
 					"id",
 					"email",
 					"name",
-					"status",
-					"password"
+					"username",
+					"password",
+					"image"
 				],
 				"type": "object",
 				"description": "From T, pick a set of properties whose keys are in the union K"
@@ -51,18 +55,22 @@
 					"name": {
 						"type": "string"
 					},
-					"status": {
+					"username": {
 						"type": "string"
 					},
 					"password": {
+						"type": "string"
+					},
+					"image": {
 						"type": "string"
 					}
 				},
 				"required": [
 					"email",
 					"name",
-					"status",
-					"password"
+					"username",
+					"password",
+					"image"
 				],
 				"type": "object",
 				"description": "From T, pick a set of properties whose keys are in the union K"

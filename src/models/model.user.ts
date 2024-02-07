@@ -1,13 +1,23 @@
-import { Model, ModelObject, QueryContext } from "objection";
+import { ModelObject, QueryContext } from "objection";
+import Base from "./model.base";
+import { Post } from "./model.post";
+import { Comment } from "./model.comment";
+import { PostVote } from "./model.postVote";
+import { CommentVote } from "./model.commentVote";
 import bcrypt from "bcrypt";
 
-export class User extends Model {
-  id!: number;
+export class User extends Base {
+  id!: string;
   email!: string;
   name!: string;
   username!: string;
   password!: string;
   image!: string;
+
+  posts?: Post[];
+  comments?: Comment[];
+  postVotes?: PostVote[];
+  commentVotes?: CommentVote[];
 
   static get tableName() {
     return "users";
@@ -16,9 +26,9 @@ export class User extends Model {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["email", "name", "username", "password" ],
+      required: ["email", "name", "username", "password"],
       properties: {
-        id: { type: "integer" },
+        id: { type: "string" },
         email: { type: "string", format: "email" },
         name: { type: "string" },
         username: { type: "string" },

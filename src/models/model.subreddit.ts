@@ -1,28 +1,52 @@
+import { ModelObject } from "objection";
 import Base from "./model.base";
 import { Post } from "./model.post";
 import { User } from "./model.user";
+import { Subscription } from "./model.subscription";
 export class SubReddit extends Base {
-
-  id!: string;
+  id!: number;
   name!: string;
   creatorId?: string;
   creator?: User;
+  createdAt?: string;
+  updatedAt?: string;
   posts?: Post[];
   subscribers?: Subscription[];
-  
+
   static get tableName() {
     return "subreddits";
   }
 
-  static get idColumn(){
-    return "id";
+  static get jsonSchema() {
+    return {
+      type: "object",
+      required: ["name", "creatorId"],
+      properties: {
+        id: { type: "string" },
+        name: { type: "string", minLength: 1, maxLength: 255 },
+        creatorId: { type: "string" },
+        createdAt: { type: "string", format: "date-time" },
+        updatedAt: { type: "string", format: "date-time" },
+      },
+    };
   }
 
   static get relationMappings() {
     return {
-      creator: {},
-      posts: {},
-      subscribers: {},
+      creator: {
+        relation: Base.BelongsToOneRelation,
+        modelClass: User,
+        join: {
+          from: "subreddits.creatorId",
+          to: "users.id",
+        },
+      },
     };
   }
+
+  static get index() {
+    return "name";
+  }
 }
+
+export type SubRedditSchema = ModelObject<SubReddit>;

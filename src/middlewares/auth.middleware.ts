@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import { JwtService } from "../services/jwt.service";
-import { UserSchema } from "../models/model.user";
+import { UserSchema } from "../schemas/user.schema";
 
 export interface CustomRequest extends Request {
-  user: Omit<UserSchema, "id" | "password" |"username" | "image"> | null;
+  user: Pick<UserSchema, "email" | "name"> | null;
 }
 
 export const authMiddleware = async (

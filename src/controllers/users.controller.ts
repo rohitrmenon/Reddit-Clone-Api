@@ -10,13 +10,13 @@ import {
   Middlewares,
 } from "tsoa";
 import { UsersService } from "../services/users.service";
-import { UserSchema } from "../models/model.user";
+import { UserLoginResponseSchema, UserLoginSchema, UserRegisterResponseSchema, UserRegisterSchema} from "../schemas/user.schema";
 import { authMiddleware } from "../middlewares/auth.middleware";
 @Route("api/v1/users")
 @Tags("Users")
 export class UserController extends Controller {
   private __UsersService = new UsersService();
-  
+
   @Get("{userId}")
   public getUser(@Path() userId: number) {
     this.setStatus(200);
@@ -29,12 +29,12 @@ export class UserController extends Controller {
     this.setStatus(200);
     return this.__UsersService.getAllUsers();
   }
-  
+
   @Post("/register")
   @SuccessResponse("201", "User registered successfully")
   public async createUser(
-    @Body() requestBody: Omit<UserSchema, "id" | "createdAt" | "updatedAt">
-  ): Promise<UserSchema | string> {
+    @Body() requestBody:UserRegisterSchema
+  ): Promise<UserRegisterResponseSchema | string> {
     const newUser = await this.__UsersService.create(requestBody);
     return newUser;
   }
@@ -42,8 +42,8 @@ export class UserController extends Controller {
   @Post("/login")
   @SuccessResponse("201", "User logged in successfully")
   public async loginUser(
-    @Body() requestBody: Pick<UserSchema, "email" | "password">
-  ): Promise<UserSchema | string> {
+    @Body() requestBody: UserLoginSchema
+  ): Promise<UserLoginResponseSchema| string> {
     console.log("requestBody", requestBody);
     const user = await this.__UsersService.login(requestBody);
     return user;

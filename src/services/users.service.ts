@@ -1,4 +1,13 @@
-import { UserSchema, User } from "../models/model.user";
+import { v4 as uuidv4 } from "uuid";
+
+import { User } from "../models/model.user";
+import {
+  UserLoginResponseSchema,
+  UserLoginSchema,
+  UserRegisterResponseSchema,
+  UserRegisterSchema,
+  UserSchema,
+} from "../schemas/user.schema";
 import logger from "../helpers/logger";
 import { JwtService } from "./jwt.service";
 export class UsersService {
@@ -26,16 +35,15 @@ export class UsersService {
     }
   }
 
-  public async create(
-    requestBody: Omit<UserSchema, "id" | "createdAt" | "updatedAt">
-  ) {
+  public async create(requestBody: UserRegisterSchema):Promise<UserRegisterResponseSchema | string> {
     try {
-      const result = await User.query().insert(requestBody);
-      const token = JwtService.generateToken(result);
-      return {
-        token,
-        ...result,
-      };
+      const id = uuidv4();
+
+      const user = await User.query().insert({ ...requestBody, id });
+      const token = JwtService.generateToken(user);
+      const { password, ...userWithoutPassword } = user;
+      console.log(token);
+      return { ...userWithoutPassword, token };
     } catch (e) {
       logger.error(e);
       return "Error creating User";
@@ -43,25 +51,22 @@ export class UsersService {
   }
 
   public async login(
-    requestBody: Pick<UserSchema, "email" | "password">
-  ): Promise<UserSchema | string > {
+    requestBody: UserLoginSchema
+  ): Promise<UserLoginResponseSchema | string> {
     const user = await User.query().findOne({
       email: requestBody.email,
     });
     if (user) {
       if (await user.comparePassword(requestBody.password)) {
         const token = JwtService.generateToken(user);
-        console.log(token)
-        return {
-          token,
-          ...user,
-        } as UserSchema;
+        const { password, ...userWithoutPassword } = user;
+        console.log(token);
+        return { ...userWithoutPassword, token };
       } else {
         return "Incorrect Password";
       }
-    }
-    else{
-      return "User not found"
+    } else {
+      return "User not found";
     }
   }
 }

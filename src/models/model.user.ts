@@ -1,4 +1,4 @@
-import { ModelObject, QueryContext } from "objection";
+import {  QueryContext } from "objection";
 import bcrypt from "bcrypt";
 
 import Base from "./model.base";
@@ -52,4 +52,3 @@ export class User extends Base {
   }
 }
 
-export type UserSchema = ModelObject<User>;

@@ -13,29 +13,54 @@ import type { RequestHandler, Router } from 'express';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
-    "Pick_User.Objection.DataPropertyNames_User__": {
+    "Pick_Objection.ModelObject_User_.Exclude_keyofObjection.ModelObject_User_.createdSubreddits-or-subscriptions-or-posts-or-comments-or-postVotes-or-commentVotes__": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"double","required":true},"email":{"dataType":"string","required":true},"name":{"dataType":"string","required":true},"username":{"dataType":"string","required":true},"password":{"dataType":"string","required":true},"image":{"dataType":"string","required":true}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"string","required":true},"email":{"dataType":"string","required":true},"name":{"dataType":"string","required":true},"username":{"dataType":"string","required":true},"password":{"dataType":"string","required":true},"image":{"dataType":"string"}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Objection.ModelObject_User_": {
+    "Omit_Objection.ModelObject_User_.createdSubreddits-or-subscriptions-or-posts-or-comments-or-postVotes-or-commentVotes_": {
         "dataType": "refAlias",
-        "type": {"ref":"Pick_User.Objection.DataPropertyNames_User__","validators":{}},
+        "type": {"ref":"Pick_Objection.ModelObject_User_.Exclude_keyofObjection.ModelObject_User_.createdSubreddits-or-subscriptions-or-posts-or-comments-or-postVotes-or-commentVotes__","validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "UserSchema": {
         "dataType": "refAlias",
-        "type": {"ref":"Objection.ModelObject_User_","validators":{}},
+        "type": {"ref":"Omit_Objection.ModelObject_User_.createdSubreddits-or-subscriptions-or-posts-or-comments-or-postVotes-or-commentVotes_","validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Pick_UserSchema.Exclude_keyofUserSchema.id-or-createdAt-or-updatedAt__": {
+    "Pick_UserSchema.Exclude_keyofUserSchema.password__": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"email":{"dataType":"string","required":true},"name":{"dataType":"string","required":true},"username":{"dataType":"string","required":true},"password":{"dataType":"string","required":true},"image":{"dataType":"string","required":true}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"string","required":true},"email":{"dataType":"string","required":true},"name":{"dataType":"string","required":true},"username":{"dataType":"string","required":true},"image":{"dataType":"string"}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Omit_UserSchema.id-or-createdAt-or-updatedAt_": {
+    "Omit_UserSchema.password_": {
         "dataType": "refAlias",
-        "type": {"ref":"Pick_UserSchema.Exclude_keyofUserSchema.id-or-createdAt-or-updatedAt__","validators":{}},
+        "type": {"ref":"Pick_UserSchema.Exclude_keyofUserSchema.password__","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "UserLoginResponseSchema": {
+        "dataType": "refAlias",
+        "type": {"dataType":"intersection","subSchemas":[{"ref":"Omit_UserSchema.password_"},{"dataType":"nestedObjectLiteral","nestedProperties":{"token":{"dataType":"string","required":true}}}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "UserRegisterResponseSchema": {
+        "dataType": "refAlias",
+        "type": {"ref":"UserLoginResponseSchema","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Pick_UserSchema.Exclude_keyofUserSchema.id__": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"email":{"dataType":"string","required":true},"name":{"dataType":"string","required":true},"username":{"dataType":"string","required":true},"password":{"dataType":"string","required":true},"image":{"dataType":"string"}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Omit_UserSchema.id_": {
+        "dataType": "refAlias",
+        "type": {"ref":"Pick_UserSchema.Exclude_keyofUserSchema.id__","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "UserRegisterSchema": {
+        "dataType": "refAlias",
+        "type": {"ref":"Omit_UserSchema.id_","validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Pick_UserSchema.email-or-password_": {
@@ -43,9 +68,39 @@ const models: TsoaRoute.Models = {
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"email":{"dataType":"string","required":true},"password":{"dataType":"string","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "UserLoginSchema": {
+        "dataType": "refAlias",
+        "type": {"ref":"Pick_UserSchema.email-or-password_","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Pick_any.Objection.DataPropertyNames_any__": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Objection.ModelObject_any_": {
+        "dataType": "refAlias",
+        "type": {"ref":"Pick_any.Objection.DataPropertyNames_any__","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "User": {
+        "dataType": "refAlias",
+        "type": {"ref":"Objection.ModelObject_any_","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "SubReddit": {
+        "dataType": "refAlias",
+        "type": {"ref":"Objection.ModelObject_any_","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PostVote": {
+        "dataType": "refAlias",
+        "type": {"ref":"Objection.ModelObject_any_","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Pick_Post.Objection.DataPropertyNames_Post__": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"double","required":true},"createdAt":{"dataType":"string"},"updatedAt":{"dataType":"string"},"title":{"dataType":"string","required":true},"content":{"dataType":"string","required":true}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"string","required":true},"title":{"dataType":"string","required":true},"content":{"dataType":"object"},"createdAt":{"dataType":"string"},"updatedAt":{"dataType":"string"},"authorId":{"dataType":"string"},"author":{"ref":"User"},"subredditId":{"dataType":"string"},"subreddit":{"ref":"SubReddit"},"PostVotes":{"dataType":"array","array":{"dataType":"refAlias","ref":"PostVote"}}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Objection.ModelObject_Post_": {
@@ -60,7 +115,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Pick_PostSchema.Exclude_keyofPostSchema.id-or-createdAt-or-updatedAt__": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"title":{"dataType":"string","required":true},"content":{"dataType":"string","required":true}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"title":{"dataType":"string","required":true},"content":{"dataType":"object"},"authorId":{"dataType":"string"},"author":{"ref":"User"},"subredditId":{"dataType":"string"},"subreddit":{"ref":"SubReddit"},"PostVotes":{"dataType":"array","array":{"dataType":"refAlias","ref":"PostVote"}}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Omit_PostSchema.id-or-createdAt-or-updatedAt_": {
@@ -133,7 +188,7 @@ export function RegisterRoutes(app: Router) {
 
             function UserController_createUser(request: any, response: any, next: any) {
             const args = {
-                    requestBody: {"in":"body","name":"requestBody","required":true,"ref":"Omit_UserSchema.id-or-createdAt-or-updatedAt_"},
+                    requestBody: {"in":"body","name":"requestBody","required":true,"ref":"UserRegisterSchema"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -158,7 +213,7 @@ export function RegisterRoutes(app: Router) {
 
             function UserController_loginUser(request: any, response: any, next: any) {
             const args = {
-                    requestBody: {"in":"body","name":"requestBody","required":true,"ref":"Pick_UserSchema.email-or-password_"},
+                    requestBody: {"in":"body","name":"requestBody","required":true,"ref":"UserLoginSchema"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

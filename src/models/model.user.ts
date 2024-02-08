@@ -1,10 +1,13 @@
 import { ModelObject, QueryContext } from "objection";
+import bcrypt from "bcrypt";
+
 import Base from "./model.base";
 import { Post } from "./model.post";
 import { Comment } from "./model.comment";
 import { PostVote } from "./model.postVote";
 import { CommentVote } from "./model.commentVote";
-import bcrypt from "bcrypt";
+import { SubReddit } from "./model.subreddit";
+import { Subscription } from "./model.subscription";
 
 export class User extends Base {
   id!: string;
@@ -12,8 +15,9 @@ export class User extends Base {
   name!: string;
   username!: string;
   password!: string;
-  image!: string;
-
+  image?: string;
+  createdSubreddits?: SubReddit[];
+  subscriptions?:Subscription[]
   posts?: Post[];
   comments?: Comment[];
   postVotes?: PostVote[];

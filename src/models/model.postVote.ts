@@ -3,6 +3,7 @@ import { User } from "./model.user";
 import { ModelObject } from "objection";
 import { Post } from "./model.post";
 export class PostVote extends Base {
+  id!:string;
   userId!: string;
   user!: User;
   postId!: string;
@@ -38,8 +39,8 @@ export class PostVote extends Base {
         relation: Base.BelongsToOneRelation,
         modelClass: Post,
         join: {
-          from: "postVotes.commentId",
-          to: "comments.id",
+          from: "postVotes.postId",
+          to: "posts.id",
         },
       },
     };

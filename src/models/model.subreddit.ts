@@ -4,7 +4,7 @@ import { Post } from "./model.post";
 import { User } from "./model.user";
 import { Subscription } from "./model.subscription";
 export class SubReddit extends Base {
-  id!: number;
+  id!: string;
   name!: string;
   creatorId?: string;
   creator?: User;
@@ -41,6 +41,14 @@ export class SubReddit extends Base {
           to: "users.id",
         },
       },
+      posts:{
+        relation: Base.HasManyRelation,
+        modelClass: Post,
+        join: {
+          from: "subreddits.id",
+          to: "posts.subredditId",
+        },
+      }
     };
   }
 

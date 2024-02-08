@@ -2,7 +2,7 @@ import Base from "./model.base";
 import { SubReddit } from "./model.subreddit";
 import { User } from "./model.user";
 export class Subscription extends Base {
-  id!: number;
+  id!: string;
   userId!: string;
   user!: User;
   subredditId!: string;

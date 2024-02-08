@@ -10,6 +10,7 @@ export class Comment extends Base {
   postId!: string;
   replyToId?: string;
   replies?: Comment[];
+  votes?: CommentVote[];
 
   static get tableName() {
     return "comments";

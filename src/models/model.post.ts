@@ -2,16 +2,18 @@ import { ModelObject } from "objection";
 import Base from "./model.base";
 import { User } from "./model.user";
 import { SubReddit } from "./model.subreddit";
+import { PostVote } from "./model.postVote";
 export class Post extends Base {
   id!: string;
   title!: string;
   content?: object;
   createdAt?: string;
   updatedAt?: string;
-  authorId?: number;
+  authorId?: string;
   author?: User;
-  subredditId?: number;
+  subredditId?: string;
   subreddit?: SubReddit;
+  PostVotes?: PostVote[];
 
   static get tableName() {
     return "posts";
@@ -27,8 +29,8 @@ export class Post extends Base {
         content: { type: "object" },
         createdAt: { type: "string", format: "date-time" },
         updatedAt: { type: "string", format: "date-time" },
-        authorId: { type: "integer" },
-        subredditId: { type: "integer" },
+        authorId: { type: "string" },
+        subredditId: { type: "string" },
       },
     };
   }

@@ -3,6 +3,7 @@ import { User } from "./model.user";
 import { Comment } from "./model.comment"; // Assuming you already have the Comment model
 import { ModelObject } from "objection";
 export class CommentVote extends Base {
+  id!:string;
   userId!: string;
   user!: User;
   commentId!: string;

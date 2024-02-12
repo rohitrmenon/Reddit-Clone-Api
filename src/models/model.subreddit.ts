@@ -1,12 +1,12 @@
-import { ModelObject } from "objection";
 import Base from "./model.base";
 import { Post } from "./model.post";
 import { User } from "./model.user";
 import { Subscription } from "./model.subscription";
+
 export class SubReddit extends Base {
   id!: string;
   name!: string;
-  creatorId?: string;
+  creatorId!: string;
   creator?: User;
   createdAt?: string;
   updatedAt?: string;
@@ -41,20 +41,27 @@ export class SubReddit extends Base {
           to: "users.id",
         },
       },
-      posts:{
+      posts: {
         relation: Base.HasManyRelation,
         modelClass: Post,
         join: {
           from: "subreddits.id",
           to: "posts.subredditId",
         },
-      }
+      },
     };
+  }
+
+  $beforeInsert() {
+    this.createdAt = new Date().toISOString();
+    this.updatedAt = new Date().toISOString();
+  }
+
+  $beforeUpdate() {
+    this.updatedAt = new Date().toISOString();
   }
 
   static get index() {
     return "name";
   }
 }
-
-export type SubRedditSchema = ModelObject<SubReddit>;

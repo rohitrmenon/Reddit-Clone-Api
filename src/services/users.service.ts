@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { User } from "../models/model.user";
 import {
+  UserDataResponseSchema,
   UserLoginResponseSchema,
   UserLoginSchema,
   UserRegisterResponseSchema,
@@ -11,11 +12,12 @@ import {
 import logger from "../helpers/logger";
 import { JwtService } from "./jwt.service";
 export class UsersService {
-  public async get(id: number): Promise<UserSchema | string> {
+  public async get(id: string): Promise<UserDataResponseSchema | string> {
     try {
       const user = await User.query().findById(id);
       if (user) {
-        return user;
+        const { password, ...userWithoutPassword } = user;
+        return userWithoutPassword;
       } else {
         throw new Error(`User with ID ${id} not found`);
       }
@@ -35,7 +37,9 @@ export class UsersService {
     }
   }
 
-  public async create(requestBody: UserRegisterSchema):Promise<UserRegisterResponseSchema | string> {
+  public async create(
+    requestBody: UserRegisterSchema
+  ): Promise<UserRegisterResponseSchema | string> {
     try {
       const id = uuidv4();
 

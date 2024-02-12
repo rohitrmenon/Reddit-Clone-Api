@@ -27,7 +27,7 @@ app.use(
 const corsOptions = {
   origin: "*",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  Headers: true,
+  allowedHeaders: "*", 
   preflightContinue: false,
   optionsSuccessStatus: 204,
 };

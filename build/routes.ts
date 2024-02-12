@@ -5,6 +5,8 @@ import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute, H
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { UserController } from './../src/controllers/users.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { SubRedditController } from './../src/controllers/subreddit.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { PostsController } from './../src/controllers/posts.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { HealthCheckController } from './../src/controllers/healthCheck.controller';
@@ -13,6 +15,21 @@ import type { RequestHandler, Router } from 'express';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
+    "Pick_UserSchema.Exclude_keyofUserSchema.password__": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"string","required":true},"email":{"dataType":"string","required":true},"name":{"dataType":"string","required":true},"username":{"dataType":"string","required":true},"image":{"dataType":"string"}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Omit_UserSchema.password_": {
+        "dataType": "refAlias",
+        "type": {"ref":"Pick_UserSchema.Exclude_keyofUserSchema.password__","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "UserDataResponseSchema": {
+        "dataType": "refAlias",
+        "type": {"ref":"Omit_UserSchema.password_","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Pick_Objection.ModelObject_User_.Exclude_keyofObjection.ModelObject_User_.createdSubreddits-or-subscriptions-or-posts-or-comments-or-postVotes-or-commentVotes__": {
         "dataType": "refAlias",
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"string","required":true},"email":{"dataType":"string","required":true},"name":{"dataType":"string","required":true},"username":{"dataType":"string","required":true},"password":{"dataType":"string","required":true},"image":{"dataType":"string"}},"validators":{}},
@@ -26,16 +43,6 @@ const models: TsoaRoute.Models = {
     "UserSchema": {
         "dataType": "refAlias",
         "type": {"ref":"Omit_Objection.ModelObject_User_.createdSubreddits-or-subscriptions-or-posts-or-comments-or-postVotes-or-commentVotes_","validators":{}},
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Pick_UserSchema.Exclude_keyofUserSchema.password__": {
-        "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"string","required":true},"email":{"dataType":"string","required":true},"name":{"dataType":"string","required":true},"username":{"dataType":"string","required":true},"image":{"dataType":"string"}},"validators":{}},
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Omit_UserSchema.password_": {
-        "dataType": "refAlias",
-        "type": {"ref":"Pick_UserSchema.Exclude_keyofUserSchema.password__","validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "UserLoginResponseSchema": {
@@ -88,6 +95,36 @@ const models: TsoaRoute.Models = {
         "type": {"ref":"Objection.ModelObject_any_","validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Pick_Objection.ModelObject_SubReddit_.Exclude_keyofObjection.ModelObject_SubReddit_.posts-or-subscribers__": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"string","required":true},"name":{"dataType":"string","required":true},"creatorId":{"dataType":"string","required":true},"creator":{"ref":"User"},"createdAt":{"dataType":"string"},"updatedAt":{"dataType":"string"}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Omit_Objection.ModelObject_SubReddit_.posts-or-subscribers_": {
+        "dataType": "refAlias",
+        "type": {"ref":"Pick_Objection.ModelObject_SubReddit_.Exclude_keyofObjection.ModelObject_SubReddit_.posts-or-subscribers__","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "SubRedditSchema": {
+        "dataType": "refAlias",
+        "type": {"ref":"Omit_Objection.ModelObject_SubReddit_.posts-or-subscribers_","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Pick_SubRedditSchema.Exclude_keyofSubRedditSchema.id-or-createdAt-or-updatedAt-or-creator__": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"name":{"dataType":"string","required":true},"creatorId":{"dataType":"string","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Omit_SubRedditSchema.id-or-createdAt-or-updatedAt-or-creator_": {
+        "dataType": "refAlias",
+        "type": {"ref":"Pick_SubRedditSchema.Exclude_keyofSubRedditSchema.id-or-createdAt-or-updatedAt-or-creator__","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "SubRedditCreateSchema": {
+        "dataType": "refAlias",
+        "type": {"ref":"Omit_SubRedditSchema.id-or-createdAt-or-updatedAt-or-creator_","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "SubReddit": {
         "dataType": "refAlias",
         "type": {"ref":"Objection.ModelObject_any_","validators":{}},
@@ -100,7 +137,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Pick_Post.Objection.DataPropertyNames_Post__": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"string","required":true},"title":{"dataType":"string","required":true},"content":{"dataType":"object"},"createdAt":{"dataType":"string"},"updatedAt":{"dataType":"string"},"authorId":{"dataType":"string"},"author":{"ref":"User"},"subredditId":{"dataType":"string"},"subreddit":{"ref":"SubReddit"},"PostVotes":{"dataType":"array","array":{"dataType":"refAlias","ref":"PostVote"}}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"string","required":true},"createdAt":{"dataType":"string"},"updatedAt":{"dataType":"string"},"title":{"dataType":"string","required":true},"content":{"dataType":"object"},"authorId":{"dataType":"string"},"author":{"ref":"User"},"subredditId":{"dataType":"string"},"subreddit":{"ref":"SubReddit"},"PostVotes":{"dataType":"array","array":{"dataType":"refAlias","ref":"PostVote"}}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Objection.ModelObject_Post_": {
@@ -139,7 +176,7 @@ export function RegisterRoutes(app: Router) {
 
             function UserController_getUser(request: any, response: any, next: any) {
             const args = {
-                    userId: {"in":"path","name":"userId","required":true,"dataType":"double"},
+                    userId: {"in":"path","name":"userId","required":true,"dataType":"string"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -226,6 +263,105 @@ export function RegisterRoutes(app: Router) {
 
 
               const promise = controller.loginUser.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 201, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/v1/subreddits/:subredditId',
+            ...(fetchMiddlewares<RequestHandler>(SubRedditController)),
+            ...(fetchMiddlewares<RequestHandler>(SubRedditController.prototype.getSubReddit)),
+
+            function SubRedditController_getSubReddit(request: any, response: any, next: any) {
+            const args = {
+                    subredditId: {"in":"path","name":"subredditId","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SubRedditController();
+
+
+              const promise = controller.getSubReddit.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/v1/subreddits',
+            ...(fetchMiddlewares<RequestHandler>(SubRedditController)),
+            ...(fetchMiddlewares<RequestHandler>(SubRedditController.prototype.getAllSubReddits)),
+
+            function SubRedditController_getAllSubReddits(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SubRedditController();
+
+
+              const promise = controller.getAllSubReddits.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/v1/subreddits/user/:userId',
+            ...(fetchMiddlewares<RequestHandler>(SubRedditController)),
+            ...(fetchMiddlewares<RequestHandler>(SubRedditController.prototype.getSubRedditsByUser)),
+
+            function SubRedditController_getSubRedditsByUser(request: any, response: any, next: any) {
+            const args = {
+                    userId: {"in":"path","name":"userId","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SubRedditController();
+
+
+              const promise = controller.getSubRedditsByUser.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/v1/subreddits/create',
+            ...(fetchMiddlewares<RequestHandler>(SubRedditController)),
+            ...(fetchMiddlewares<RequestHandler>(SubRedditController.prototype.createSubReddit)),
+
+            function SubRedditController_createSubReddit(request: any, response: any, next: any) {
+            const args = {
+                    requestBody: {"in":"body","name":"requestBody","required":true,"ref":"SubRedditCreateSchema"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SubRedditController();
+
+
+              const promise = controller.createSubReddit.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, 201, next);
             } catch (err) {
                 return next(err);

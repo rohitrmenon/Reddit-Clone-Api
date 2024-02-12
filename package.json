@@ -1,7 +1,7 @@
 {
-  "name": "reddit-clone-api",
+  "name": "yorokobi-api",
   "version": "1.0.0",
-  "description": "A Reddit clone",
+  "description": "An unopinionated reddit",
   "main": "index.js",
   "scripts": {
     "dev": "concurrently \"nodemon\" \"nodemon -x tsoa spec-and-routes\"",

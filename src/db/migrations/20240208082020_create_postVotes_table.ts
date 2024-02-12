@@ -3,8 +3,8 @@ import { Knex } from "knex";
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable("postVotes", (table) => {
     table.string("id").primary();
-    table.string("userId").notNullable().references("id").inTable("users");
-    table.string("postId").notNullable().references("id").inTable("posts");
+    table.string("user_id").notNullable().references("id").inTable("users");
+    table.string("post_id").notNullable().references("id").inTable("posts");
     table.enum("type", ["UP", "DOWN"]).notNullable();
   });
 }

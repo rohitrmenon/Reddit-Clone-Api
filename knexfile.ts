@@ -1,6 +1,6 @@
 import { Knex } from 'knex';
 import { appConfig } from './src/config/app.config';
-
+import { knexSnakeCaseMappers } from 'objection';
 const config: Knex.Config = {
   client: "pg" ,
   connection: {
@@ -20,6 +20,7 @@ const config: Knex.Config = {
     directory: "./src/db/seeds",
     extension: "ts",
   },
+  ...knexSnakeCaseMappers()
 };
 
 export default config;

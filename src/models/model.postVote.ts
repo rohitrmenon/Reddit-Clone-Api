@@ -2,6 +2,7 @@ import Base from "./model.base";
 import { User } from "./model.user";
 import { ModelObject } from "objection";
 import { Post } from "./model.post";
+import { VoteType } from "./enum.vote";
 export class PostVote extends Base {
   id!:string;
   userId!: string;

@@ -110,6 +110,11 @@ const models: TsoaRoute.Models = {
         "type": {"ref":"Omit_Objection.ModelObject_SubReddit_.posts-or-subscribers_","validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "SubReddit": {
+        "dataType": "refAlias",
+        "type": {"ref":"Objection.ModelObject_any_","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Pick_SubRedditSchema.Exclude_keyofSubRedditSchema.id-or-createdAt-or-updatedAt-or-creator__": {
         "dataType": "refAlias",
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"name":{"dataType":"string","required":true},"creatorId":{"dataType":"string","required":true}},"validators":{}},
@@ -125,19 +130,19 @@ const models: TsoaRoute.Models = {
         "type": {"ref":"Omit_SubRedditSchema.id-or-createdAt-or-updatedAt-or-creator_","validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "SubReddit": {
+    "PostVote": {
         "dataType": "refAlias",
         "type": {"ref":"Objection.ModelObject_any_","validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "PostVote": {
+    "Comment": {
         "dataType": "refAlias",
         "type": {"ref":"Objection.ModelObject_any_","validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Pick_Post.Objection.DataPropertyNames_Post__": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"string","required":true},"createdAt":{"dataType":"string"},"updatedAt":{"dataType":"string"},"title":{"dataType":"string","required":true},"content":{"dataType":"object"},"authorId":{"dataType":"string"},"author":{"ref":"User"},"subredditId":{"dataType":"string"},"subreddit":{"ref":"SubReddit"},"PostVotes":{"dataType":"array","array":{"dataType":"refAlias","ref":"PostVote"}}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"string","required":true},"createdAt":{"dataType":"string"},"updatedAt":{"dataType":"string"},"title":{"dataType":"string","required":true},"content":{"dataType":"object"},"authorId":{"dataType":"string"},"author":{"ref":"User"},"subredditId":{"dataType":"string"},"subreddit":{"ref":"SubReddit"},"PostVotes":{"dataType":"array","array":{"dataType":"refAlias","ref":"PostVote"}},"Comments":{"dataType":"array","array":{"dataType":"refAlias","ref":"Comment"}}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Objection.ModelObject_Post_": {
@@ -152,7 +157,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Pick_PostSchema.Exclude_keyofPostSchema.id-or-createdAt-or-updatedAt__": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"title":{"dataType":"string","required":true},"content":{"dataType":"object"},"authorId":{"dataType":"string"},"author":{"ref":"User"},"subredditId":{"dataType":"string"},"subreddit":{"ref":"SubReddit"},"PostVotes":{"dataType":"array","array":{"dataType":"refAlias","ref":"PostVote"}}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"title":{"dataType":"string","required":true},"content":{"dataType":"object"},"authorId":{"dataType":"string"},"author":{"ref":"User"},"subredditId":{"dataType":"string"},"subreddit":{"ref":"SubReddit"},"PostVotes":{"dataType":"array","array":{"dataType":"refAlias","ref":"PostVote"}},"Comments":{"dataType":"array","array":{"dataType":"refAlias","ref":"Comment"}}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Omit_PostSchema.id-or-createdAt-or-updatedAt_": {

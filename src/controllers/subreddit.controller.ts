@@ -17,6 +17,8 @@ import {
   SubRedditSchema,
 } from "../schemas/subreddit.schema";
 
+import { SubReddit } from "../models/model.subreddit";
+
 @Route("api/v1/subreddits")
 @Middlewares(authMiddleware)
 @Tags("Subreddits")
@@ -60,12 +62,14 @@ export class SubRedditController extends Controller {
   }
 
   @Get("getBySlug/{slug}")
-  public async getSubRedditBySlug(@Path() slug:string):Promise<SubRedditSchema[] | string>{
-    try{
+  public async getSubRedditBySlug(
+    @Path() slug: string
+  ): Promise<SubReddit | string | undefined> {
+    try {
       const subreddit = await this.__subRedditService.getBySlug(slug);
-      return subreddit
-    }catch(e:any){
-      return `Error getting subreddit by slug: ${e.message}`
+      return subreddit;
+    } catch (e: any) {
+      return `Error getting subreddit by slug: ${e.message}`;
     }
   }
 

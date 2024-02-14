@@ -42,11 +42,15 @@ export class SubRedditService {
 
   public async getBySlug(slug: string) {
     try {
-      const subreddits = (await SubReddit.query().where("name", slug));
-      return subreddits;
+      const subreddit = await SubReddit.query()
+        .findOne({ name: slug })
+        .withGraphFetched("posts");
+      if (!subreddit)
+        throw new Error(`Subreddit with slug '${slug}' not found`);
+      return subreddit;
     } catch (e: any) {
-      logger.error(e);
-      return `Error retrieving subreddits for user: ${e.message}`;
+      logger.error(e.message);
+      return `${e.message}`;
     }
   }
   public async create(

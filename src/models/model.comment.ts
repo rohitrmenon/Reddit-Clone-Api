@@ -8,6 +8,7 @@ export class Comment extends Base {
   createdAt?: string;
   authorId!: string;
   postId!: string;
+  Post!: Post;
   replyToId?: string;
   replies?: Comment[];
   votes?: CommentVote[];

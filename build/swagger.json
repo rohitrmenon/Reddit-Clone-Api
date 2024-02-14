@@ -201,6 +201,9 @@
 			"SubRedditSchema": {
 				"$ref": "#/components/schemas/Omit_Objection.ModelObject_SubReddit_.posts-or-subscribers_"
 			},
+			"SubReddit": {
+				"$ref": "#/components/schemas/Objection.ModelObject_any_"
+			},
 			"Pick_SubRedditSchema.Exclude_keyofSubRedditSchema.id-or-createdAt-or-updatedAt-or-creator__": {
 				"properties": {
 					"name": {
@@ -224,10 +227,10 @@
 			"SubRedditCreateSchema": {
 				"$ref": "#/components/schemas/Omit_SubRedditSchema.id-or-createdAt-or-updatedAt-or-creator_"
 			},
-			"SubReddit": {
+			"PostVote": {
 				"$ref": "#/components/schemas/Objection.ModelObject_any_"
 			},
-			"PostVote": {
+			"Comment": {
 				"$ref": "#/components/schemas/Objection.ModelObject_any_"
 			},
 			"Pick_Post.Objection.DataPropertyNames_Post__": {
@@ -263,6 +266,12 @@
 					"PostVotes": {
 						"items": {
 							"$ref": "#/components/schemas/PostVote"
+						},
+						"type": "array"
+					},
+					"Comments": {
+						"items": {
+							"$ref": "#/components/schemas/Comment"
 						},
 						"type": "array"
 					}
@@ -305,6 +314,12 @@
 					"PostVotes": {
 						"items": {
 							"$ref": "#/components/schemas/PostVote"
+						},
+						"type": "array"
+					},
+					"Comments": {
+						"items": {
+							"$ref": "#/components/schemas/Comment"
 						},
 						"type": "array"
 					}
@@ -602,10 +617,7 @@
 								"schema": {
 									"anyOf": [
 										{
-											"items": {
-												"$ref": "#/components/schemas/SubRedditSchema"
-											},
-											"type": "array"
+											"$ref": "#/components/schemas/SubReddit"
 										},
 										{
 											"type": "string"

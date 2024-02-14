@@ -3,6 +3,7 @@ import Base from "./model.base";
 import { User } from "./model.user";
 import { SubReddit } from "./model.subreddit";
 import { PostVote } from "./model.postVote";
+import { Comment } from "./model.comment";
 export class Post extends Base {
   id!: string;
   title!: string;
@@ -14,6 +15,7 @@ export class Post extends Base {
   subredditId?: string;
   subreddit?: SubReddit;
   PostVotes?: PostVote[];
+  Comments?: Comment[];
 
   static get tableName() {
     return "posts";
@@ -53,6 +55,22 @@ export class Post extends Base {
           to: "subreddits.id",
         },
       },
+      comments:{
+        relation: Base.HasManyRelation,
+        modelClass: Comment,
+        join: {
+          from: "posts.id",
+          to: "comments.postId",
+        },
+      },
+      postVotes:{
+        relation: Base.HasManyRelation,
+        modelClass: PostVote,
+        join: {
+          from: "posts.id",
+          to: "postVotes.postId",
+        },
+      }
     }
   }
 

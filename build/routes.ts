@@ -269,11 +269,11 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/api/v1/subreddits/:subredditId',
+        app.get('/api/v1/subreddits/getById/:subredditId',
             ...(fetchMiddlewares<RequestHandler>(SubRedditController)),
-            ...(fetchMiddlewares<RequestHandler>(SubRedditController.prototype.getSubReddit)),
+            ...(fetchMiddlewares<RequestHandler>(SubRedditController.prototype.getSubRedditById)),
 
-            function SubRedditController_getSubReddit(request: any, response: any, next: any) {
+            function SubRedditController_getSubRedditById(request: any, response: any, next: any) {
             const args = {
                     subredditId: {"in":"path","name":"subredditId","required":true,"dataType":"string"},
             };
@@ -287,7 +287,7 @@ export function RegisterRoutes(app: Router) {
                 const controller = new SubRedditController();
 
 
-              const promise = controller.getSubReddit.apply(controller, validatedArgs as any);
+              const promise = controller.getSubRedditById.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
@@ -337,6 +337,31 @@ export function RegisterRoutes(app: Router) {
 
 
               const promise = controller.getSubRedditsByUser.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/v1/subreddits/getBySlug/:slug',
+            ...(fetchMiddlewares<RequestHandler>(SubRedditController)),
+            ...(fetchMiddlewares<RequestHandler>(SubRedditController.prototype.getSubRedditBySlug)),
+
+            function SubRedditController_getSubRedditBySlug(request: any, response: any, next: any) {
+            const args = {
+                    slug: {"in":"path","name":"slug","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SubRedditController();
+
+
+              const promise = controller.getSubRedditBySlug.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);

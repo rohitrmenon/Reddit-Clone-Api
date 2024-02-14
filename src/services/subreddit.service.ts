@@ -39,6 +39,16 @@ export class SubRedditService {
       return `Error retrieving subreddits for user: ${e.message}`;
     }
   }
+
+  public async getBySlug(slug: string) {
+    try {
+      const subreddits = (await SubReddit.query().where("name", slug));
+      return subreddits;
+    } catch (e: any) {
+      logger.error(e);
+      return `Error retrieving subreddits for user: ${e.message}`;
+    }
+  }
   public async create(
     requestBody: SubRedditCreateSchema
   ): Promise<SubRedditSchema | string> {

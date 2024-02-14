@@ -18,13 +18,13 @@ import {
 } from "../schemas/subreddit.schema";
 
 @Route("api/v1/subreddits")
+@Middlewares(authMiddleware)
 @Tags("Subreddits")
 export class SubRedditController extends Controller {
   private __subRedditService = new SubRedditService();
 
-  @Get("{subredditId}")
-  @Middlewares(authMiddleware)
-  public async getSubReddit(
+  @Get("getById/{subredditId}")
+  public async getSubRedditById(
     @Path() subredditId: string
   ): Promise<SubRedditSchema | string> {
     try {
@@ -37,7 +37,6 @@ export class SubRedditController extends Controller {
   }
 
   @Get()
-  @Middlewares(authMiddleware)
   public async getAllSubReddits(): Promise<SubRedditSchema[] | string> {
     try {
       const subreddits = await this.__subRedditService.getAllSubReddits();
@@ -48,7 +47,6 @@ export class SubRedditController extends Controller {
     }
   }
   @Get("user/{userId}")
-  @Middlewares(authMiddleware)
   public async getSubRedditsByUser(
     @Path() userId: string
   ): Promise<SubRedditSchema[] | string> {
@@ -61,8 +59,17 @@ export class SubRedditController extends Controller {
     }
   }
 
+  @Get("getBySlug/{slug}")
+  public async getSubRedditBySlug(@Path() slug:string):Promise<SubRedditSchema[] | string>{
+    try{
+      const subreddit = await this.__subRedditService.getBySlug(slug);
+      return subreddit
+    }catch(e:any){
+      return `Error getting subreddit by slug: ${e.message}`
+    }
+  }
+
   @Post("/create")
-  @Middlewares(authMiddleware)
   @SuccessResponse("201", "Subreddit created successfully")
   public async createSubReddit(
     @Body() requestBody: SubRedditCreateSchema
@@ -76,11 +83,11 @@ export class SubRedditController extends Controller {
   }
 
   @Delete("{subredditId}")
-  @Middlewares(authMiddleware)
   @SuccessResponse("204", "Subreddit deleted successfully")
   public async deleteSubReddit(@Path() subredditId: string) {
     try {
-      const deletedSubreddit = await this.__subRedditService.delete(subredditId);
+      const deletedSubreddit =
+        await this.__subRedditService.delete(subredditId);
       return deletedSubreddit;
     } catch (error) {
       return "Error deleting the subredddit";
@@ -88,9 +95,8 @@ export class SubRedditController extends Controller {
   }
 
   @Delete("/deleteAll/{userId}")
-  @Middlewares(authMiddleware)
   @SuccessResponse("204", "All subreddits deleted successfully")
-  public async deleteAllSubRedditsByUserId(@Path() userId:string) {
+  public async deleteAllSubRedditsByUserId(@Path() userId: string) {
     try {
       const deletedSubreddits = await this.__subRedditService.deleteAll(userId);
       return deletedSubreddits;
@@ -98,5 +104,4 @@ export class SubRedditController extends Controller {
       return "Error deleting all subreddits";
     }
   }
-
 }

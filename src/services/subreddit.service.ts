@@ -28,9 +28,11 @@ export class SubRedditService {
     }
   }
 
-  public async getByUserId(userId: string): Promise<SubRedditSchema[] | string> {
+  public async getByUserId(
+    userId: string
+  ): Promise<SubRedditSchema[] | string> {
     try {
-      const subreddits = await SubReddit.query().where('creatorId', userId);
+      const subreddits = await SubReddit.query().where("creatorId", userId);
       return subreddits;
     } catch (e: any) {
       logger.error(e);
@@ -57,6 +59,26 @@ export class SubRedditService {
     } catch (e: any) {
       logger.error(e);
       return `Error creating subreddit: ${e.message}`;
+    }
+  }
+
+  public async delete(subreddditId: string): Promise<string> {
+    try {
+      await SubReddit.query().deleteById(subreddditId);
+      return `Deleted subreddit with id ${subreddditId}`;
+    } catch (e: any) {
+      logger.error(e);
+      return `Error deleting subreddit: ${e.message}`;
+    }
+  }
+
+  public async deleteAll(userId: string) {
+    try {
+      await SubReddit.query().delete().where("creatorId", userId);
+      return `Deleted all subreddits`;
+    } catch (e: any) {
+      logger.error(e);
+      return `Error deleting all subreddits: ${e.message}`;
     }
   }
 }

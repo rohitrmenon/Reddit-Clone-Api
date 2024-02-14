@@ -55,7 +55,6 @@ export class UserController extends Controller {
   public async loginUser(
     @Body() requestBody: UserLoginSchema
   ): Promise<UserLoginResponseSchema | string> {
-    console.log("requestBody", requestBody);
     const user = await this.__UsersService.login(requestBody);
     return user;
   }

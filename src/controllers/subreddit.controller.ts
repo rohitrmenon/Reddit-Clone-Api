@@ -8,6 +8,7 @@ import {
   SuccessResponse,
   Controller,
   Middlewares,
+  Delete,
 } from "tsoa";
 import { SubRedditService } from "../services/subreddit.service";
 import { authMiddleware } from "../middlewares/auth.middleware";
@@ -49,7 +50,7 @@ export class SubRedditController extends Controller {
   @Get("user/{userId}")
   @Middlewares(authMiddleware)
   public async getSubRedditsByUser(
-    @Path() userId: string,
+    @Path() userId: string
   ): Promise<SubRedditSchema[] | string> {
     try {
       const subreddits = await this.__subRedditService.getByUserId(userId);
@@ -61,6 +62,7 @@ export class SubRedditController extends Controller {
   }
 
   @Post("/create")
+  @Middlewares(authMiddleware)
   @SuccessResponse("201", "Subreddit created successfully")
   public async createSubReddit(
     @Body() requestBody: SubRedditCreateSchema
@@ -69,8 +71,32 @@ export class SubRedditController extends Controller {
       const newSubReddit = await this.__subRedditService.create(requestBody);
       return newSubReddit;
     } catch (e) {
-      console.log(e);
       return "Error creating subreddit";
     }
   }
+
+  @Delete("{subredditId}")
+  @Middlewares(authMiddleware)
+  @SuccessResponse("204", "Subreddit deleted successfully")
+  public async deleteSubReddit(@Path() subredditId: string) {
+    try {
+      const deletedSubreddit = await this.__subRedditService.delete(subredditId);
+      return deletedSubreddit;
+    } catch (error) {
+      return "Error deleting the subredddit";
+    }
+  }
+
+  @Delete("/deleteAll/{userId}")
+  @Middlewares(authMiddleware)
+  @SuccessResponse("204", "All subreddits deleted successfully")
+  public async deleteAllSubRedditsByUserId(@Path() userId:string) {
+    try {
+      const deletedSubreddits = await this.__subRedditService.deleteAll(userId);
+      return deletedSubreddits;
+    } catch (error) {
+      return "Error deleting all subreddits";
+    }
+  }
+
 }

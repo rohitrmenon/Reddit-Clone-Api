@@ -368,6 +368,56 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/api/v1/subreddits/:subredditId',
+            ...(fetchMiddlewares<RequestHandler>(SubRedditController)),
+            ...(fetchMiddlewares<RequestHandler>(SubRedditController.prototype.deleteSubReddit)),
+
+            function SubRedditController_deleteSubReddit(request: any, response: any, next: any) {
+            const args = {
+                    subredditId: {"in":"path","name":"subredditId","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SubRedditController();
+
+
+              const promise = controller.deleteSubReddit.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 204, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/api/v1/subreddits/deleteAll/:userId',
+            ...(fetchMiddlewares<RequestHandler>(SubRedditController)),
+            ...(fetchMiddlewares<RequestHandler>(SubRedditController.prototype.deleteAllSubRedditsByUserId)),
+
+            function SubRedditController_deleteAllSubRedditsByUserId(request: any, response: any, next: any) {
+            const args = {
+                    userId: {"in":"path","name":"userId","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SubRedditController();
+
+
+              const promise = controller.deleteAllSubRedditsByUserId.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 204, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/v1/posts/:postId',
             ...(fetchMiddlewares<RequestHandler>(PostsController)),
             ...(fetchMiddlewares<RequestHandler>(PostsController.prototype.getPost)),

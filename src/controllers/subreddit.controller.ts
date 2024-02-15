@@ -19,7 +19,7 @@ import {
 
 import { SubReddit } from "../models/model.subreddit";
 
-@Route("api/v1/subreddits")
+@Route("api/v1/subreddit")
 @Middlewares(authMiddleware)
 @Tags("Subreddits")
 export class SubRedditController extends Controller {

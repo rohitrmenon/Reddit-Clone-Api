@@ -224,6 +224,30 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/v1/users/:userId/subscriptions',
+            ...(fetchMiddlewares<RequestHandler>(UserController)),
+            ...(fetchMiddlewares<RequestHandler>(UserController.prototype.getAllSubscriptions)),
+
+            function UserController_getAllSubscriptions(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new UserController();
+
+
+              const promise = controller.getAllSubscriptions.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/v1/users/register',
             ...(fetchMiddlewares<RequestHandler>(UserController)),
             ...(fetchMiddlewares<RequestHandler>(UserController.prototype.createUser)),
@@ -274,7 +298,7 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/api/v1/subreddits/getById/:subredditId',
+        app.get('/api/v1/subreddit/getById/:subredditId',
             ...(fetchMiddlewares<RequestHandler>(SubRedditController)),
             ...(fetchMiddlewares<RequestHandler>(SubRedditController.prototype.getSubRedditById)),
 
@@ -299,7 +323,7 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/api/v1/subreddits',
+        app.get('/api/v1/subreddit',
             ...(fetchMiddlewares<RequestHandler>(SubRedditController)),
             ...(fetchMiddlewares<RequestHandler>(SubRedditController.prototype.getAllSubReddits)),
 
@@ -323,7 +347,7 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/api/v1/subreddits/user/:userId',
+        app.get('/api/v1/subreddit/user/:userId',
             ...(fetchMiddlewares<RequestHandler>(SubRedditController)),
             ...(fetchMiddlewares<RequestHandler>(SubRedditController.prototype.getSubRedditsByUser)),
 
@@ -348,7 +372,7 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/api/v1/subreddits/getBySlug/:slug',
+        app.get('/api/v1/subreddit/getBySlug/:slug',
             ...(fetchMiddlewares<RequestHandler>(SubRedditController)),
             ...(fetchMiddlewares<RequestHandler>(SubRedditController.prototype.getSubRedditBySlug)),
 
@@ -373,7 +397,7 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/api/v1/subreddits/create',
+        app.post('/api/v1/subreddit/create',
             ...(fetchMiddlewares<RequestHandler>(SubRedditController)),
             ...(fetchMiddlewares<RequestHandler>(SubRedditController.prototype.createSubReddit)),
 
@@ -398,7 +422,7 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.delete('/api/v1/subreddits/:subredditId',
+        app.delete('/api/v1/subreddit/:subredditId',
             ...(fetchMiddlewares<RequestHandler>(SubRedditController)),
             ...(fetchMiddlewares<RequestHandler>(SubRedditController.prototype.deleteSubReddit)),
 
@@ -423,7 +447,7 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.delete('/api/v1/subreddits/deleteAll/:userId',
+        app.delete('/api/v1/subreddit/deleteAll/:userId',
             ...(fetchMiddlewares<RequestHandler>(SubRedditController)),
             ...(fetchMiddlewares<RequestHandler>(SubRedditController.prototype.deleteAllSubRedditsByUserId)),
 

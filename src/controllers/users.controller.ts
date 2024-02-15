@@ -36,6 +36,11 @@ export class UserController extends Controller {
     return this.__UsersService.getAllUsers();
   }
 
+  @Get("{userId}/subscriptions")
+  public async getAllSubscriptions(){
+
+  }
+
   @Post("/register")
   @SuccessResponse("201", "User registered successfully")
   public async createUser(

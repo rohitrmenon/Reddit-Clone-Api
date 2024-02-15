@@ -417,6 +417,21 @@
 				"parameters": []
 			}
 		},
+		"/api/v1/users/{userId}/subscriptions": {
+			"get": {
+				"operationId": "GetAllSubscriptions",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
 		"/api/v1/users/register": {
 			"post": {
 				"operationId": "CreateUser",
@@ -495,7 +510,7 @@
 				}
 			}
 		},
-		"/api/v1/subreddits/getById/{subredditId}": {
+		"/api/v1/subreddit/getById/{subredditId}": {
 			"get": {
 				"operationId": "GetSubRedditById",
 				"responses": {
@@ -533,7 +548,7 @@
 				]
 			}
 		},
-		"/api/v1/subreddits": {
+		"/api/v1/subreddit": {
 			"get": {
 				"operationId": "GetAllSubReddits",
 				"responses": {
@@ -565,7 +580,7 @@
 				"parameters": []
 			}
 		},
-		"/api/v1/subreddits/user/{userId}": {
+		"/api/v1/subreddit/user/{userId}": {
 			"get": {
 				"operationId": "GetSubRedditsByUser",
 				"responses": {
@@ -606,7 +621,7 @@
 				]
 			}
 		},
-		"/api/v1/subreddits/getBySlug/{slug}": {
+		"/api/v1/subreddit/getBySlug/{slug}": {
 			"get": {
 				"operationId": "GetSubRedditBySlug",
 				"responses": {
@@ -644,7 +659,7 @@
 				]
 			}
 		},
-		"/api/v1/subreddits/create": {
+		"/api/v1/subreddit/create": {
 			"post": {
 				"operationId": "CreateSubReddit",
 				"responses": {
@@ -683,7 +698,7 @@
 				}
 			}
 		},
-		"/api/v1/subreddits/{subredditId}": {
+		"/api/v1/subreddit/{subredditId}": {
 			"delete": {
 				"operationId": "DeleteSubReddit",
 				"responses": {
@@ -714,7 +729,7 @@
 				]
 			}
 		},
-		"/api/v1/subreddits/deleteAll/{userId}": {
+		"/api/v1/subreddit/deleteAll/{userId}": {
 			"delete": {
 				"operationId": "DeleteAllSubRedditsByUserId",
 				"responses": {

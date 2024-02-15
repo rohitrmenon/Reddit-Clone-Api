@@ -1,4 +1,4 @@
-import {  QueryContext } from "objection";
+import { QueryContext } from "objection";
 import bcrypt from "bcrypt";
 
 import Base from "./model.base";
@@ -17,7 +17,7 @@ export class User extends Base {
   password!: string;
   image?: string;
   createdSubreddits?: SubReddit[];
-  subscriptions?:Subscription[]
+  subscriptions?: Subscription[];
   posts?: Post[];
   comments?: Comment[];
   postVotes?: PostVote[];
@@ -42,6 +42,59 @@ export class User extends Base {
     };
   }
 
+  static get relationMappings() {
+    return {
+      createdSubreddits: {
+        relation: Base.HasManyRelation,
+        modelClass: SubReddit,
+        join: {
+          from: "users.id",
+          to: "subreddits.creatorId",
+        },
+      },
+      subscriptions: {
+        relation: Base.HasManyRelation,
+        modelClass: Subscription,
+        join: {
+          from: "users.id",
+          to: "subscriptions.userId",
+        },
+      },
+      posts: {
+        relation: Base.HasManyRelation,
+        modelClass: Post,
+        join: {
+          from: "users.id",
+          to: "posts.userId",
+        },
+      },
+      comments: {
+        relation: Base.HasManyRelation,
+        modelClass: Comment,
+        join: {
+          from: "users.id",
+          to: "comments.userId",
+        },
+      },
+      postVotes: {
+        relation: Base.HasManyRelation,
+        modelClass: PostVote,
+        join: {
+          from: "users.id",
+          to: "postVotes.userId",
+        },
+      },
+      commentVotes: {
+        relation: Base.HasManyRelation,
+        modelClass: CommentVote,
+        join: {
+          from: "users.id",
+          to: "commentVotes.userId",
+        },
+      },
+    };
+  }
+
   async $beforeInsert(context: QueryContext) {
     await super.$beforeInsert(context);
     this.password = await bcrypt.hash(this.password, 10);
@@ -51,4 +104,3 @@ export class User extends Base {
     return bcrypt.compare(candidatePassword, this.password);
   }
 }
-

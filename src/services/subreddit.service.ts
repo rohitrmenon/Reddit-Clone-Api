@@ -45,7 +45,7 @@ export class SubRedditService {
     try {
       const subreddit = await SubReddit.query()
         .findOne({ name: slug })
-        .withGraphFetched("[posts,subscribers]");
+        .withGraphFetched("[posts,subscribers,creator]");
       if (!subreddit)
         throw new Error(`Subreddit with slug '${slug}' not found`);
       return subreddit;
@@ -54,6 +54,7 @@ export class SubRedditService {
       return `${e.message}`;
     }
   }
+
   public async create(
     requestBody: SubRedditCreateSchema
   ): Promise<SubRedditSchema | string> {

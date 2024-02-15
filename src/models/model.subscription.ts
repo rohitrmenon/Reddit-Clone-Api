@@ -17,7 +17,7 @@ export class Subscription extends Base {
       type: "object",
       required: ["userId", "subredditId"],
       properties: {
-        id: { type: "integer" },
+        id: { type: "string" },
         userId: { type: "string" },
         subredditId: { type: "string" },
       },

@@ -49,6 +49,14 @@ export class SubReddit extends Base {
           to: "posts.subredditId",
         },
       },
+      subscribers: {
+        relation: Base.HasManyRelation,
+        modelClass: Subscription,
+        join: {
+          from: "subreddits.id",
+          to: "subscriptions.subredditId",
+        },
+      }
     };
   }
 

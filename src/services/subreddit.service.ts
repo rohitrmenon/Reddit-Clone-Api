@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 
 import { SubReddit } from "../models/model.subreddit";
+import { Subscription } from "../models/model.subscription";
 import {
   SubRedditCreateSchema,
   SubRedditSchema,
@@ -44,7 +45,7 @@ export class SubRedditService {
     try {
       const subreddit = await SubReddit.query()
         .findOne({ name: slug })
-        .withGraphFetched("posts");
+        .withGraphFetched("[posts,subscribers]");
       if (!subreddit)
         throw new Error(`Subreddit with slug '${slug}' not found`);
       return subreddit;
@@ -68,6 +69,11 @@ export class SubRedditService {
       const newSubReddit = await SubReddit.query().insertGraph({
         ...requestBody,
         id,
+      });
+      await Subscription.query().insert({
+        id: uuidv4(),
+        userId: newSubReddit.creatorId,
+        subredditId: newSubReddit.id,
       });
       return newSubReddit;
     } catch (e: any) {

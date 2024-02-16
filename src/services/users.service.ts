@@ -42,11 +42,9 @@ export class UsersService {
   ): Promise<UserRegisterResponseSchema | string> {
     try {
       const id = uuidv4();
-
       const user = await User.query().insert({ ...requestBody, id });
       const token = JwtService.generateToken(user);
       const { password, ...userWithoutPassword } = user;
-      console.log(token);
       return { ...userWithoutPassword, token };
     } catch (e) {
       logger.error(e);

@@ -115,6 +115,16 @@ const models: TsoaRoute.Models = {
         "type": {"ref":"Objection.ModelObject_any_","validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Pick_SubscriptionModel.Exclude_keyofSubscriptionModel.id-or-user-or-subreddit__": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"userId":{"dataType":"string","required":true},"subredditId":{"dataType":"string","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Omit_SubscriptionModel.id-or-user-or-subreddit_": {
+        "dataType": "refAlias",
+        "type": {"ref":"Pick_SubscriptionModel.Exclude_keyofSubscriptionModel.id-or-user-or-subreddit__","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Pick_SubRedditSchema.Exclude_keyofSubRedditSchema.id-or-createdAt-or-updatedAt-or-creator__": {
         "dataType": "refAlias",
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"name":{"dataType":"string","required":true},"creatorId":{"dataType":"string","required":true}},"validators":{}},
@@ -142,7 +152,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Pick_Post.Objection.DataPropertyNames_Post__": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"string","required":true},"createdAt":{"dataType":"string"},"updatedAt":{"dataType":"string"},"title":{"dataType":"string","required":true},"content":{"dataType":"object"},"authorId":{"dataType":"string"},"author":{"ref":"User"},"subredditId":{"dataType":"string"},"subreddit":{"ref":"SubReddit"},"PostVotes":{"dataType":"array","array":{"dataType":"refAlias","ref":"PostVote"}},"Comments":{"dataType":"array","array":{"dataType":"refAlias","ref":"Comment"}}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"string","required":true},"createdAt":{"dataType":"string"},"updatedAt":{"dataType":"string"},"subredditId":{"dataType":"string"},"subreddit":{"ref":"SubReddit"},"title":{"dataType":"string","required":true},"content":{"dataType":"object"},"authorId":{"dataType":"string"},"author":{"ref":"User"},"PostVotes":{"dataType":"array","array":{"dataType":"refAlias","ref":"PostVote"}},"Comments":{"dataType":"array","array":{"dataType":"refAlias","ref":"Comment"}}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Objection.ModelObject_Post_": {
@@ -157,7 +167,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Pick_PostSchema.Exclude_keyofPostSchema.id-or-createdAt-or-updatedAt__": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"title":{"dataType":"string","required":true},"content":{"dataType":"object"},"authorId":{"dataType":"string"},"author":{"ref":"User"},"subredditId":{"dataType":"string"},"subreddit":{"ref":"SubReddit"},"PostVotes":{"dataType":"array","array":{"dataType":"refAlias","ref":"PostVote"}},"Comments":{"dataType":"array","array":{"dataType":"refAlias","ref":"Comment"}}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"subredditId":{"dataType":"string"},"subreddit":{"ref":"SubReddit"},"title":{"dataType":"string","required":true},"content":{"dataType":"object"},"authorId":{"dataType":"string"},"author":{"ref":"User"},"PostVotes":{"dataType":"array","array":{"dataType":"refAlias","ref":"PostVote"}},"Comments":{"dataType":"array","array":{"dataType":"refAlias","ref":"Comment"}}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Omit_PostSchema.id-or-createdAt-or-updatedAt_": {
@@ -391,6 +401,31 @@ export function RegisterRoutes(app: Router) {
 
 
               const promise = controller.getSubRedditBySlug.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/v1/subreddit/subscription',
+            ...(fetchMiddlewares<RequestHandler>(SubRedditController)),
+            ...(fetchMiddlewares<RequestHandler>(SubRedditController.prototype.subscription)),
+
+            function SubRedditController_subscription(request: any, response: any, next: any) {
+            const args = {
+                    requestBody: {"in":"body","name":"requestBody","required":true,"ref":"Omit_SubscriptionModel.id-or-user-or-subreddit_"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SubRedditController();
+
+
+              const promise = controller.subscription.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);

@@ -2,6 +2,7 @@
 
 run: kill-8080
 	npm run db:create
+	npm run knex:migrate
 	npm run dev
 
 kill-8080:

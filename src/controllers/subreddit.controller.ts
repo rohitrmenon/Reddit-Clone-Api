@@ -18,6 +18,7 @@ import {
 } from "../schemas/subreddit.schema";
 
 import { SubReddit } from "../models/model.subreddit";
+import { SubscriptionModel } from "../models/model.subscription";
 
 @Route("api/v1/subreddit")
 @Middlewares(authMiddleware)
@@ -70,6 +71,23 @@ export class SubRedditController extends Controller {
       return subreddit;
     } catch (e: any) {
       return `Error getting subreddit by slug: ${e.message}`;
+    }
+  }
+
+  @Post("subscription")
+  public async subscription(
+    @Body() requestBody: Omit<SubscriptionModel, "id" | "user" | "subreddit">
+  ): Promise<any> {
+    try {
+      console.log(requestBody);
+      const subreddit = await this.__subRedditService.subscription(
+        requestBody.userId,
+        requestBody.subredditId,
+      );
+      return subreddit;
+    } catch (e: any) {
+      console.log(e);
+      return `Error subscribing to subreddit: ${e.message}`;
     }
   }
 

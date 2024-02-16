@@ -1,3 +1,4 @@
+import { ModelObject } from "objection";
 import Base from "./model.base";
 import { SubReddit } from "./model.subreddit";
 import { User } from "./model.user";
@@ -45,3 +46,5 @@ export class Subscription extends Base {
     };
   }
 }
+
+export type SubscriptionModel = ModelObject<Subscription>

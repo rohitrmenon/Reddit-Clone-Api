@@ -55,6 +55,36 @@ export class SubRedditService {
     }
   }
 
+  public async subscription(
+    userId: string,
+    subreddditId: string
+  ): Promise<Subscription[] | number | Subscription | string> {
+    try {
+      const existingSubscription = await Subscription.query()
+        .where("subredditId", subreddditId)
+        .where("userId", userId);
+
+      if (existingSubscription.length > 0) {
+        const removedSubscription = await Subscription.query()
+          .delete()
+          .where("userId", userId)
+          .where("subredditId", subreddditId);
+        return removedSubscription;
+      } else {
+        const newSubscription = await Subscription.query().insert({
+          id: uuidv4(),
+          userId: userId,
+          subredditId: subreddditId,
+        });
+        console.log(newSubscription);
+        return newSubscription;
+      }
+    } catch (error) {
+      console.error("Error in subscription operation:", error);
+      throw error;
+    }
+  }
+
   public async create(
     requestBody: SubRedditCreateSchema
   ): Promise<SubRedditSchema | string> {

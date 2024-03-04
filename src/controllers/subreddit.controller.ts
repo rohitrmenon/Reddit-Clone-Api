@@ -74,15 +74,34 @@ export class SubRedditController extends Controller {
     }
   }
 
-  @Post("subscription")
-  public async subscription(
+  @Get("getSubscription/user/{userId}/subreddit/{subredditId}")
+  public async getSubscription(
+    @Path() userId: string,
+    subredditId: string
+  ): Promise<any> {
+    try {
+      const subscription = await this.__subRedditService.getSubscription(
+        userId,
+        subredditId
+      );
+      if (subscription.length === 0) {
+        return false;
+      }
+      return true;
+    } catch (e: any) {
+      console.log(e);
+      return `Error getting subscription: ${e.message}`;
+    }
+  }
+
+  @Post("postSubscription")
+  public async postSubscription(
     @Body() requestBody: Omit<SubscriptionModel, "id" | "user" | "subreddit">
   ): Promise<any> {
     try {
-      console.log(requestBody);
-      const subreddit = await this.__subRedditService.subscription(
+      const subreddit = await this.__subRedditService.postSubscription(
         requestBody.userId,
-        requestBody.subredditId,
+        requestBody.subredditId
       );
       return subreddit;
     } catch (e: any) {

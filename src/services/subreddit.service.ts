@@ -55,28 +55,42 @@ export class SubRedditService {
     }
   }
 
-  public async subscription(
+  public async getSubscription(
     userId: string,
-    subreddditId: string
+    subredditId: string
+  ): Promise<Subscription[] | string> {
+    try {
+      const subscriptions = await Subscription.query()
+        .where("subredditId", subredditId)
+        .where("userId", userId);
+      return subscriptions;
+    } catch (error) {
+      console.error("Error in subscription operation:", error);
+      throw error;
+    }
+  }
+
+  public async postSubscription(
+    userId: string,
+    subredditId: string
   ): Promise<Subscription[] | number | Subscription | string> {
     try {
       const existingSubscription = await Subscription.query()
-        .where("subredditId", subreddditId)
+        .where("subredditId", subredditId)
         .where("userId", userId);
 
       if (existingSubscription.length > 0) {
         const removedSubscription = await Subscription.query()
           .delete()
           .where("userId", userId)
-          .where("subredditId", subreddditId);
+          .where("subredditId", subredditId);
         return removedSubscription;
       } else {
         const newSubscription = await Subscription.query().insert({
           id: uuidv4(),
           userId: userId,
-          subredditId: subreddditId,
+          subredditId: subredditId,
         });
-        console.log(newSubscription);
         return newSubscription;
       }
     } catch (error) {

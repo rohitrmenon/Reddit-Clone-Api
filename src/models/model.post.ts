@@ -7,7 +7,7 @@ import { Comment } from "./model.comment";
 export class Post extends Base {
   id!: string;
   title!: string;
-  content?: object;
+  content!: object;
   createdAt?: string;
   updatedAt?: string;
   authorId?: string;

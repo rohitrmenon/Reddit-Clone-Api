@@ -9,7 +9,7 @@ import {
   Path,
 } from "tsoa";
 import { PostsService } from "../services/posts.service";
-import { PostSchema } from "../models/model.post";
+// import { PostSchema } from "../models/model.post";
 @Route("api/v1/posts")
 @Tags("Posts")
 export class PostsController extends Controller {
@@ -27,12 +27,16 @@ export class PostsController extends Controller {
     return this.__PostsService.getAllPosts();
   }
 
-  @Post()
+  @Post("/create")
   @SuccessResponse("201", "Created")
-  public createPost(
-    @Body() requestBody: Omit<PostSchema, "id" | "createdAt" | "updatedAt">
-  ) {
+  public createPost(@Body() requestBody: any) {
     this.setStatus(200);
     return this.__PostsService.create(requestBody);
+  }
+
+  @Post("/link")
+  public async linkLoader(@Body() requestBody: any) {
+    console.log(requestBody);
+    // TODO: Implement this
   }
 }

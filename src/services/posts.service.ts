@@ -1,5 +1,8 @@
+import { v4 as uuidv4 } from "uuid";
+
 import logger from "../helpers/logger";
 import { PostSchema, Post } from "../models/model.post";
+
 export class PostsService {
   public async get(id: number): Promise<PostSchema | string> {
     try {
@@ -29,7 +32,8 @@ export class PostsService {
     requestBody: Omit<PostSchema, "id" | "createdAt" | "updatedAt">
   ): Promise<PostSchema | string> {
     try {
-      const newPost = await Post.query().insert(requestBody);
+      const id = uuidv4();
+      const newPost = await Post.query().insert({ ...requestBody, id });
       return newPost;
     } catch (e) {
       logger.error(e);

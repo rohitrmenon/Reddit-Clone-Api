@@ -152,7 +152,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Pick_Post.Objection.DataPropertyNames_Post__": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"string","required":true},"createdAt":{"dataType":"string"},"updatedAt":{"dataType":"string"},"subredditId":{"dataType":"string"},"subreddit":{"ref":"SubReddit"},"title":{"dataType":"string","required":true},"content":{"dataType":"object"},"authorId":{"dataType":"string"},"author":{"ref":"User"},"PostVotes":{"dataType":"array","array":{"dataType":"refAlias","ref":"PostVote"}},"Comments":{"dataType":"array","array":{"dataType":"refAlias","ref":"Comment"}}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"string","required":true},"createdAt":{"dataType":"string"},"updatedAt":{"dataType":"string"},"subredditId":{"dataType":"string"},"subreddit":{"ref":"SubReddit"},"title":{"dataType":"string","required":true},"content":{"dataType":"object","required":true},"authorId":{"dataType":"string"},"author":{"ref":"User"},"PostVotes":{"dataType":"array","array":{"dataType":"refAlias","ref":"PostVote"}},"Comments":{"dataType":"array","array":{"dataType":"refAlias","ref":"Comment"}}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Objection.ModelObject_Post_": {
@@ -163,16 +163,6 @@ const models: TsoaRoute.Models = {
     "PostSchema": {
         "dataType": "refAlias",
         "type": {"ref":"Objection.ModelObject_Post_","validators":{}},
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Pick_PostSchema.Exclude_keyofPostSchema.id-or-createdAt-or-updatedAt__": {
-        "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"subredditId":{"dataType":"string"},"subreddit":{"ref":"SubReddit"},"title":{"dataType":"string","required":true},"content":{"dataType":"object"},"authorId":{"dataType":"string"},"author":{"ref":"User"},"PostVotes":{"dataType":"array","array":{"dataType":"refAlias","ref":"PostVote"}},"Comments":{"dataType":"array","array":{"dataType":"refAlias","ref":"Comment"}}},"validators":{}},
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Omit_PostSchema.id-or-createdAt-or-updatedAt_": {
-        "dataType": "refAlias",
-        "type": {"ref":"Pick_PostSchema.Exclude_keyofPostSchema.id-or-createdAt-or-updatedAt__","validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
@@ -407,11 +397,37 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/api/v1/subreddit/subscription',
+        app.get('/api/v1/subreddit/getSubscription/user/:userId/subreddit/:subredditId',
             ...(fetchMiddlewares<RequestHandler>(SubRedditController)),
-            ...(fetchMiddlewares<RequestHandler>(SubRedditController.prototype.subscription)),
+            ...(fetchMiddlewares<RequestHandler>(SubRedditController.prototype.getSubscription)),
 
-            function SubRedditController_subscription(request: any, response: any, next: any) {
+            function SubRedditController_getSubscription(request: any, response: any, next: any) {
+            const args = {
+                    userId: {"in":"path","name":"userId","required":true,"dataType":"string"},
+                    subredditId: {"in":"path","name":"subredditId","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SubRedditController();
+
+
+              const promise = controller.getSubscription.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/v1/subreddit/postSubscription',
+            ...(fetchMiddlewares<RequestHandler>(SubRedditController)),
+            ...(fetchMiddlewares<RequestHandler>(SubRedditController.prototype.postSubscription)),
+
+            function SubRedditController_postSubscription(request: any, response: any, next: any) {
             const args = {
                     requestBody: {"in":"body","name":"requestBody","required":true,"ref":"Omit_SubscriptionModel.id-or-user-or-subreddit_"},
             };
@@ -425,7 +441,7 @@ export function RegisterRoutes(app: Router) {
                 const controller = new SubRedditController();
 
 
-              const promise = controller.subscription.apply(controller, validatedArgs as any);
+              const promise = controller.postSubscription.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
@@ -556,13 +572,13 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/api/v1/posts',
+        app.post('/api/v1/posts/create',
             ...(fetchMiddlewares<RequestHandler>(PostsController)),
             ...(fetchMiddlewares<RequestHandler>(PostsController.prototype.createPost)),
 
             function PostsController_createPost(request: any, response: any, next: any) {
             const args = {
-                    requestBody: {"in":"body","name":"requestBody","required":true,"ref":"Omit_PostSchema.id-or-createdAt-or-updatedAt_"},
+                    requestBody: {"in":"body","name":"requestBody","required":true,"dataType":"any"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -576,6 +592,31 @@ export function RegisterRoutes(app: Router) {
 
               const promise = controller.createPost.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, 201, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/v1/posts/link',
+            ...(fetchMiddlewares<RequestHandler>(PostsController)),
+            ...(fetchMiddlewares<RequestHandler>(PostsController.prototype.linkLoader)),
+
+            function PostsController_linkLoader(request: any, response: any, next: any) {
+            const args = {
+                    requestBody: {"in":"body","name":"requestBody","required":true,"dataType":"any"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PostsController();
+
+
+              const promise = controller.linkLoader.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
             }

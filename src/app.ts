@@ -19,19 +19,19 @@ Model.knex(knexInstance);
 
 export const app = express();
 
-app.use(
-  urlencoded({
-    extended: true,
-  })
-);
 const corsOptions = {
   origin: "*",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  allowedHeaders: "*", 
+  allowedHeaders: "*",
   preflightContinue: false,
   optionsSuccessStatus: 204,
 };
 app.use(cors(corsOptions));
+app.use(
+  urlencoded({
+    extended: false,
+  })
+);
 app.use(json());
 app.use(
   appConfig.swagger.path,

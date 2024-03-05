@@ -804,7 +804,39 @@
 				]
 			}
 		},
-		"/api/v1/posts/{postId}": {
+		"/api/v1/posts": {
+			"get": {
+				"operationId": "GetAllPosts",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"type": "string"
+										},
+										{
+											"items": {
+												"$ref": "#/components/schemas/PostSchema"
+											},
+											"type": "array"
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Posts"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/api/v1/posts/getPostById/{postId}": {
 			"get": {
 				"operationId": "GetPost",
 				"responses": {
@@ -843,26 +875,16 @@
 				]
 			}
 		},
-		"/api/v1/posts": {
+		"/api/v1/posts/paginate": {
 			"get": {
-				"operationId": "GetAllPosts",
+				"operationId": "ViewPosts",
 				"responses": {
 					"200": {
 						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
-									"anyOf": [
-										{
-											"type": "string"
-										},
-										{
-											"items": {
-												"$ref": "#/components/schemas/PostSchema"
-											},
-											"type": "array"
-										}
-									]
+									"type": "string"
 								}
 							}
 						}
@@ -872,7 +894,34 @@
 					"Posts"
 				],
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "query",
+						"name": "limit",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageParam",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "subredditName",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/api/v1/posts/create": {

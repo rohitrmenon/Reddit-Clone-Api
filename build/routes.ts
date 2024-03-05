@@ -523,7 +523,31 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/api/v1/posts/:postId',
+        app.get('/api/v1/posts',
+            ...(fetchMiddlewares<RequestHandler>(PostsController)),
+            ...(fetchMiddlewares<RequestHandler>(PostsController.prototype.getAllPosts)),
+
+            function PostsController_getAllPosts(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PostsController();
+
+
+              const promise = controller.getAllPosts.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/v1/posts/getPostById/:postId',
             ...(fetchMiddlewares<RequestHandler>(PostsController)),
             ...(fetchMiddlewares<RequestHandler>(PostsController.prototype.getPost)),
 
@@ -548,12 +572,15 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/api/v1/posts',
+        app.get('/api/v1/posts/paginate',
             ...(fetchMiddlewares<RequestHandler>(PostsController)),
-            ...(fetchMiddlewares<RequestHandler>(PostsController.prototype.getAllPosts)),
+            ...(fetchMiddlewares<RequestHandler>(PostsController.prototype.viewPosts)),
 
-            function PostsController_getAllPosts(request: any, response: any, next: any) {
+            function PostsController_viewPosts(request: any, response: any, next: any) {
             const args = {
+                    limit: {"in":"query","name":"limit","required":true,"dataType":"double"},
+                    pageParam: {"in":"query","name":"pageParam","required":true,"dataType":"double"},
+                    subredditName: {"in":"query","name":"subredditName","dataType":"string"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -565,7 +592,7 @@ export function RegisterRoutes(app: Router) {
                 const controller = new PostsController();
 
 
-              const promise = controller.getAllPosts.apply(controller, validatedArgs as any);
+              const promise = controller.viewPosts.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);

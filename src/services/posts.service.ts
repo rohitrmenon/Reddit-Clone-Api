@@ -40,4 +40,15 @@ export class PostsService {
       return "Error creating Post";
     }
   }
+
+  public async paginate(
+    limit: number,
+    pageParam: number,
+    subredditName?: string | undefined
+  ) {
+    try {
+      const offset = (pageParam - 1) * limit ?? 0;
+      console.log(offset, subredditName);
+    } catch {}
+  }
 }

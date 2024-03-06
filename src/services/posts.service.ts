@@ -41,32 +41,22 @@ export class PostsService {
     }
   }
 
-  public async paginate(
-    limit: number,
-    pageParam: number,
-    subredditId?: string | undefined
-  ) {
+  public async paginate(limit: number, pageParam: number, subredditId: string) {
     try {
       const offset = (pageParam - 1) * limit ?? 0;
-      console.log(offset, subredditId);
       let query = Post.query()
         .orderBy("createdAt", "desc")
         .limit(limit)
-        .offset(offset);
+        .offset(offset)
+        .withGraphFetched("[author, subreddit, comments, postVotes]")
 
-      if (subredditId) {
-        query = query.where("subredditId", "=", subredditId);
-      }
+      if (subredditId !== "undefined")
+        query = query.where("subredditId", "=", subredditId as string);
 
-      query = query.withGraphFetched(
-        "[author, subreddit, comments, postVotes]"
-      );
       
       const posts = await query;
       console.log(posts);
       return posts;
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   }
 }

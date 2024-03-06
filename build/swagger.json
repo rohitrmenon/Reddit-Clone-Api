@@ -922,7 +922,7 @@
 					{
 						"in": "query",
 						"name": "subredditId",
-						"required": false,
+						"required": true,
 						"schema": {
 							"type": "string"
 						}

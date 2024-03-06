@@ -585,7 +585,7 @@ export function RegisterRoutes(app: Router) {
             const args = {
                     limit: {"in":"query","name":"limit","required":true,"dataType":"double"},
                     pageParam: {"in":"query","name":"pageParam","required":true,"dataType":"double"},
-                    subredditId: {"in":"query","name":"subredditId","dataType":"string"},
+                    subredditId: {"in":"query","name":"subredditId","required":true,"dataType":"string"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

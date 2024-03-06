@@ -32,7 +32,7 @@ export class PostsController extends Controller {
   public viewPosts(
     @Query() limit: number,
     @Query() pageParam: number,
-    @Query() subredditId?: string
+    @Query() subredditId: string 
   ) {
     return this.__PostsService.paginate(limit, pageParam, subredditId);
   }

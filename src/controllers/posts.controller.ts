@@ -32,11 +32,9 @@ export class PostsController extends Controller {
   public viewPosts(
     @Query() limit: number,
     @Query() pageParam: number,
-    @Query() subredditName?: string
+    @Query() subredditId?: string
   ) {
-    console.log(limit, pageParam, subredditName);
-    this.setStatus(200);
-    return "up and running";
+    return this.__PostsService.paginate(limit, pageParam, subredditId);
   }
 
   @Post("/create")

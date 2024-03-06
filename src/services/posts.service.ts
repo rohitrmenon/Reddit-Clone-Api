@@ -44,11 +44,29 @@ export class PostsService {
   public async paginate(
     limit: number,
     pageParam: number,
-    subredditName?: string | undefined
+    subredditId?: string | undefined
   ) {
     try {
       const offset = (pageParam - 1) * limit ?? 0;
-      console.log(offset, subredditName);
-    } catch {}
+      console.log(offset, subredditId);
+      let query = Post.query()
+        .orderBy("createdAt", "desc")
+        .limit(limit)
+        .offset(offset);
+
+      if (subredditId) {
+        query = query.where("subredditId", "=", subredditId);
+      }
+
+      query = query.withGraphFetched(
+        "[author, subreddit, comments, postVotes]"
+      );
+      
+      const posts = await query;
+      console.log(posts);
+      return posts;
+    } catch (e) {
+      console.log(e);
+    }
   }
 }

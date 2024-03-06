@@ -165,6 +165,11 @@ const models: TsoaRoute.Models = {
         "type": {"ref":"Objection.ModelObject_Post_","validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Post": {
+        "dataType": "refAlias",
+        "type": {"ref":"Objection.ModelObject_any_","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
 const validationService = new ValidationService(models);
 
@@ -580,7 +585,7 @@ export function RegisterRoutes(app: Router) {
             const args = {
                     limit: {"in":"query","name":"limit","required":true,"dataType":"double"},
                     pageParam: {"in":"query","name":"pageParam","required":true,"dataType":"double"},
-                    subredditName: {"in":"query","name":"subredditName","dataType":"string"},
+                    subredditId: {"in":"query","name":"subredditId","dataType":"string"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

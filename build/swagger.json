@@ -313,6 +313,37 @@
 			},
 			"Post": {
 				"$ref": "#/components/schemas/Objection.ModelObject_any_"
+			},
+			"VoteType": {
+				"enum": [
+					"UP",
+					"DOWN"
+				],
+				"type": "string"
+			},
+			"Pick_PostVoteSchema.Exclude_keyofPostVoteSchema.user-or-Post-or-id__": {
+				"properties": {
+					"userId": {
+						"type": "string"
+					},
+					"postId": {
+						"type": "string"
+					},
+					"type": {
+						"$ref": "#/components/schemas/VoteType"
+					}
+				},
+				"required": [
+					"userId",
+					"postId",
+					"type"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_PostVoteSchema.user-or-Post-or-id_": {
+				"$ref": "#/components/schemas/Pick_PostVoteSchema.Exclude_keyofPostVoteSchema.user-or-Post-or-id__",
+				"description": "Construct a type with the properties of T except for those in type K."
 			}
 		},
 		"securitySchemes": {}
@@ -962,6 +993,31 @@
 					"content": {
 						"application/json": {
 							"schema": {}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/posts/vote": {
+			"patch": {
+				"operationId": "VoteForPost",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Posts"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Omit_PostVoteSchema.user-or-Post-or-id_"
+							}
 						}
 					}
 				}

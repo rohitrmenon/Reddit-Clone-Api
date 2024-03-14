@@ -4,7 +4,7 @@ import { ModelObject } from "objection";
 import { Post } from "./model.post";
 import { VoteType } from "./enum.vote";
 export class PostVote extends Base {
-  id!:string;
+  id!: string;
   userId!: string;
   user!: User;
   postId!: string;
@@ -12,16 +12,16 @@ export class PostVote extends Base {
   type!: VoteType;
 
   static get tableName() {
-    return "postVotes";;
+    return "postVotes";
   }
-
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["userId", "commentId", "type"],
+      required: ["id", "userId", "postId", "type"],
       properties: {
+        id: { type: "string" },
         userId: { type: "string" },
-        commentId: { type: "string" },
+        postId: { type: "string" },
         type: { type: "string", enum: Object.values(VoteType) },
       },
     };

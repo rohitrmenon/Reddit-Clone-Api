@@ -8,9 +8,11 @@ import {
   Post,
   Path,
   Query,
+  Patch,
 } from "tsoa";
 import { PostsService } from "../services/posts.service";
-// import { PostSchema } from "../models/model.post";
+import { PostVoteSchema } from "../models/model.postVote";
+
 @Route("api/v1/posts")
 @Tags("Posts")
 export class PostsController extends Controller {
@@ -32,7 +34,7 @@ export class PostsController extends Controller {
   public viewPosts(
     @Query() limit: number,
     @Query() pageParam: number,
-    @Query() subredditId: string 
+    @Query() subredditId: string
   ) {
     return this.__PostsService.paginate(limit, pageParam, subredditId);
   }
@@ -42,6 +44,13 @@ export class PostsController extends Controller {
   public createPost(@Body() requestBody: any) {
     this.setStatus(200);
     return this.__PostsService.create(requestBody);
+  }
+
+  @Patch("/vote")
+  public voteForPost(
+    @Body() requestBody: Omit<PostVoteSchema, "user" | "Post" | "id">
+  ) {
+    return this.__PostsService.vote(requestBody);
   }
 
   @Post("/link")

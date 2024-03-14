@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import logger from "../helpers/logger";
 import { PostSchema, Post } from "../models/model.post";
+import { PostVote, PostVoteSchema } from "../models/model.postVote";
 
 export class PostsService {
   public async get(id: number): Promise<PostSchema | string> {
@@ -48,15 +49,31 @@ export class PostsService {
         .orderBy("createdAt", "desc")
         .limit(limit)
         .offset(offset)
-        .withGraphFetched("[author, subreddit, comments, postVotes]")
+        .withGraphFetched("[author, subreddit, comments, postVotes]");
 
       if (subredditId !== "undefined")
         query = query.where("subredditId", "=", subredditId as string);
 
-      
       const posts = await query;
-      console.log(posts);
       return posts;
     } catch (e) {}
+  }
+
+  public async vote(requestBody: Omit<PostVoteSchema, "user" | "Post" | "id">) {
+    try {
+      const existingVote = await PostVote.query()
+        .where("userId", requestBody.userId)
+        .where("postId", requestBody.postId)
+        .first();
+
+      if (existingVote) {
+        await existingVote.$query().patch({ type: requestBody.type });
+      } else {
+        const id = uuidv4();
+        await PostVote.query().insert({ ...requestBody, id });
+      }
+    } catch (e: any) {
+      console.log(e);
+    }
   }
 }

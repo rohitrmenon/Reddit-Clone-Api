@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import logger from "../helpers/logger";
 import { PostSchema, Post } from "../models/model.post";
 import { PostVote, PostVoteSchema } from "../models/model.postVote";
+import { VoteType } from "../models/enum.vote";
 
 export class PostsService {
   public async get(id: number): Promise<PostSchema | string> {
@@ -67,13 +68,44 @@ export class PostsService {
         .first();
 
       if (existingVote) {
-        await existingVote.$query().patch({ type: requestBody.type });
+        if (existingVote.type === requestBody.type) {
+          await existingVote.$query().delete();
+        } else {
+          await existingVote.$query().patch({ type: requestBody.type });
+        }
       } else {
         const id = uuidv4();
         await PostVote.query().insert({ ...requestBody, id });
       }
+
+      const postId = requestBody.postId;
+      const upVotesCount = await PostVote.query()
+        .where("postId", postId)
+        .where("type", VoteType.UP)
+        .resultSize();
+      const downVotesCount = await PostVote.query()
+        .where("postId", postId)
+        .where("type", VoteType.DOWN)
+        .resultSize();
+      const votesCount = upVotesCount - downVotesCount;
+
+      await Post.query()
+        .findById(postId)
+        .patch({ votesCount });
+
+      const post = await Post.query().findById(postId)
+      return post;
     } catch (e: any) {
       console.log(e);
     }
+  }
+
+  public async getPost(postId: string) {
+    try {
+      const vote = await Post.query()
+        .where("id", postId)
+        .withGraphFetched("[postVotes]");
+      return vote;
+    } catch {}
   }
 }

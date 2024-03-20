@@ -53,6 +53,11 @@ export class PostsController extends Controller {
     return this.__PostsService.vote(requestBody);
   }
 
+  @Get("/getPost/{postId}")
+  public getVotes(@Path() postId: string) {
+    return this.__PostsService.getPost(postId);
+  }
+
   @Post("/link")
   public async linkLoader(@Body() requestBody: any) {
     console.log(requestBody);

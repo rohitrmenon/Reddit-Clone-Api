@@ -5,6 +5,7 @@ import { SubReddit } from "./model.subreddit";
 import { PostVote } from "./model.postVote";
 import { Comment } from "./model.comment";
 export class Post extends Base {
+  [x: string]: any;
   id!: string;
   title!: string;
   content!: object;
@@ -16,6 +17,7 @@ export class Post extends Base {
   subreddit?: SubReddit;
   PostVotes?: PostVote[];
   Comments?: Comment[];
+  votesCount?: string;
 
   static get tableName() {
     return "posts";
@@ -37,8 +39,8 @@ export class Post extends Base {
     };
   }
 
-  static get relationMappings(){
-    return{
+  static get relationMappings() {
+    return {
       author: {
         relation: Base.BelongsToOneRelation,
         modelClass: User,
@@ -55,7 +57,7 @@ export class Post extends Base {
           to: "subreddits.id",
         },
       },
-      comments:{
+      comments: {
         relation: Base.HasManyRelation,
         modelClass: Comment,
         join: {
@@ -63,15 +65,15 @@ export class Post extends Base {
           to: "comments.postId",
         },
       },
-      postVotes:{
+      postVotes: {
         relation: Base.HasManyRelation,
         modelClass: PostVote,
         join: {
           from: "posts.id",
           to: "postVotes.postId",
         },
-      }
-    }
+      },
+    };
   }
 
   $beforeInsert() {

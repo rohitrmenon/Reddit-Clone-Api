@@ -247,60 +247,9 @@
 			"SubRedditCreateSchema": {
 				"$ref": "#/components/schemas/Omit_SubRedditSchema.id-or-createdAt-or-updatedAt-or-creator_"
 			},
-			"PostVote": {
-				"$ref": "#/components/schemas/Objection.ModelObject_any_"
-			},
-			"Comment": {
-				"$ref": "#/components/schemas/Objection.ModelObject_any_"
-			},
 			"Pick_Post.Objection.DataPropertyNames_Post__": {
-				"properties": {
-					"id": {
-						"type": "string"
-					},
-					"createdAt": {
-						"type": "string"
-					},
-					"updatedAt": {
-						"type": "string"
-					},
-					"subredditId": {
-						"type": "string"
-					},
-					"subreddit": {
-						"$ref": "#/components/schemas/SubReddit"
-					},
-					"title": {
-						"type": "string"
-					},
-					"content": {
-						"additionalProperties": false,
-						"type": "object"
-					},
-					"authorId": {
-						"type": "string"
-					},
-					"author": {
-						"$ref": "#/components/schemas/User"
-					},
-					"PostVotes": {
-						"items": {
-							"$ref": "#/components/schemas/PostVote"
-						},
-						"type": "array"
-					},
-					"Comments": {
-						"items": {
-							"$ref": "#/components/schemas/Comment"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"id",
-					"title",
-					"content"
-				],
+				"properties": {},
+				"additionalProperties": {},
 				"type": "object",
 				"description": "From T, pick a set of properties whose keys are in the union K"
 			},
@@ -1002,8 +951,15 @@
 			"patch": {
 				"operationId": "VoteForPost",
 				"responses": {
-					"204": {
-						"description": "No content"
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Post"
+								}
+							}
+						}
 					}
 				},
 				"tags": [
@@ -1021,6 +977,40 @@
 						}
 					}
 				}
+			}
+		},
+		"/api/v1/posts/getPost/{postId}": {
+			"get": {
+				"operationId": "GetVotes",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Post"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Posts"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "postId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/api/v1/posts/link": {

@@ -1,9 +1,4 @@
-import express, {
-  json,
-  urlencoded,
-  Response as ExResponse,
-  Request as ExRequest,
-} from "express";
+import express, { json, urlencoded, Response as ExResponse, Request as ExRequest } from "express";
 import { Model } from "objection";
 import Knex from "knex";
 import swaggerUi from "swagger-ui-express";
@@ -33,6 +28,14 @@ app.use(
   })
 );
 app.use(json());
+
+// Logging middleware to log request body
+// app.use((req: ExRequest, _res: ExResponse, next: express.NextFunction) => {
+//   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+//   console.log("Request Body:", req.body);
+//   next();
+// });
+
 app.use(
   appConfig.swagger.path,
   swaggerUi.serve,
